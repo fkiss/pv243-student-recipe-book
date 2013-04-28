@@ -2,9 +2,12 @@ package cz.muni.fi.pv243.studentRecipeBook.dao;
 
 import java.util.List;
 
+import javax.ejb.Local;
+
 import cz.muni.fi.pv243.studentRecipeBook.entities.Ingredient;
 import cz.muni.fi.pv243.studentRecipeBook.entities.Recipe;
 
+@Local
 public interface RecipeDao {
 
 	public void createRecipe(Recipe recipe);
