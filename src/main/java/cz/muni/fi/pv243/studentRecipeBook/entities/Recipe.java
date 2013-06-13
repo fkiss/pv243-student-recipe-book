@@ -1,16 +1,22 @@
 package cz.muni.fi.pv243.studentRecipeBook.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import javax.persistence.*;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
+import cz.muni.fi.pv243.studentRecipeBook.categories.FoodCategory;
 
 @Entity
 public class Recipe implements Serializable {
@@ -18,20 +24,36 @@ public class Recipe implements Serializable {
 	private static final long serialVersionUID = 1365288951378467891L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue
 	private Long id;
 
-	@ManyToMany(fetch = FetchType.EAGER)
-	private List<Ingredient> ingredients;
-
-	@ManyToOne
-	private User owner;
-
-	@Column(nullable = false)
+	@NotNull
+	@Column(unique = true)
 	private String name;
 
-	@Column(nullable = false)
+	@NotNull
 	private String description;
+
+	@NotNull
+	private FoodCategory foodCategory;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "owner_id", referencedColumnName = "id")
+	private User owner;
+
+	@Min(0)
+	private Integer portions;
+
+	@Min(0)
+	private Integer stars;
+
+	@Min(0)
+	private Integer time;
+
+	@OneToMany(fetch = FetchType.LAZY)
+	private List<Ingredient> ingredientList = new ArrayList<Ingredient>();
+
+	private Date date;
 
 	public void setId(Long id) {
 		this.id = id;
@@ -39,14 +61,6 @@ public class Recipe implements Serializable {
 
 	public Long getId() {
 		return id;
-	}
-
-	public List<Ingredient> getIngredients() {
-		return ingredients;
-	}
-
-	public void setIngredients(List<Ingredient> ingredients) {
-		this.ingredients = ingredients;
 	}
 
 	public User getOwner() {
@@ -73,6 +87,60 @@ public class Recipe implements Serializable {
 		this.description = description;
 	}
 
+	public FoodCategory getFoodCategory() {
+		return foodCategory;
+	}
+
+	public void setFoodCategory(FoodCategory foodCategory) {
+		this.foodCategory = foodCategory;
+	}
+
+	public Integer getPortions() {
+		return portions;
+	}
+
+	public void setPortions(Integer portions) {
+		this.portions = portions;
+	}
+
+	public Integer getStars() {
+		return stars;
+	}
+
+	public void setStars(Integer stars) {
+		this.stars = stars;
+	}
+
+	public Integer getTime() {
+		return time;
+	}
+
+	public void setTime(Integer time) {
+		this.time = time;
+	}
+
+	public List<Ingredient> getIngredientList() {
+		return ingredientList;
+	}
+
+	public void setIngredientList(List<Ingredient> ingredientList) {
+		this.ingredientList = ingredientList;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	@PrePersist
+	protected void onCreate() {
+		date = new Date();
+	}
+
+
 	@Override
 	public int hashCode() {
 		int hash = 0;
@@ -95,7 +163,7 @@ public class Recipe implements Serializable {
 	@Override
 	public String toString() {
 		return "[Recept: " + name + ", Autor: " + owner + ", Prisady: <"
-				+ ingredients+" >]";
+				+ ingredientList+" >]";
 	}
 
 }
