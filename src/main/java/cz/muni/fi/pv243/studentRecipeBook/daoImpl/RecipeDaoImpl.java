@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.enterprise.event.Reception;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -21,81 +22,80 @@ public class RecipeDaoImpl implements RecipeDao {
 
 	public void createRecipe(Recipe recipe) {
 		validateRecipe(recipe);
-		try {
-            em.persist(recipe);
-        } finally {
-            em.close();
-        }
+
+		em.persist(recipe);
 	}
 
 	public void updateRecipe(Recipe recipe) {
 		validateRecipe(recipe);
-		try{
-			Recipe r = em.find(Recipe.class, recipe.getId());
-			r.setName(recipe.getName());
-			r.setOwner(recipe.getOwner());
-			r.setIngredients(recipe.getIngredients());
-		}
-		finally{
-			em.close();
-		}
-		
+
+		Recipe r = em.find(Recipe.class, recipe.getId());
+		r.setName(recipe.getName());
+		r.setOwner(recipe.getOwner());
+		r.setDescription(recipe.getDescription());
+		r.setFoodCategory(recipe.getFoodCategory());
+		r.setPortions(recipe.getPortions());
+		r.setTime(recipe.getTime());
+		r.setIngredientList(recipe.getIngredientList());
 	}
 
 	public void deleteRecipe(Recipe recipe) {
 		validateRecipe(recipe);
-		try {
-            Recipe r = em.find(Recipe.class, recipe.getId());
-            em.remove(r);
-        } finally {
-            em.close();
-        }
-		
+
+		Recipe r = em.find(Recipe.class, recipe.getId());
+		em.remove(r);
+
 	}
 
 	public Recipe findRecipeByName(String name) {
-		
-        try {
-            Query queryFindAll = em.createQuery("SELECT r from "
-                    + "cz.muni.fi.p243.studentRecipeBook.Recipe r where r.name = :name")
-                    .setParameter("name", name);
-            Recipe recipe = (Recipe) queryFindAll.getSingleResult();
-            return recipe;
-        } finally {
-            em.close();
-        }
+
+		Query queryFindAll = em
+				.createQuery(
+						"SELECT r from Recipe r where r.name =:name")
+				.setParameter("name", name);
+		Recipe recipe = (Recipe) queryFindAll.getSingleResult();
+		return recipe;
 	}
 
 	public List<Recipe> findRecipesByIngredients(List<Ingredient> ingredients) {
-		Query queryFindAll = em.createQuery("SELECT r from "
-                + "cz.muni.fi.p243.studentRecipeBook.Recipe r WHERE r.ingredients = :ingredients ")
-                .setParameter("ingredients", ingredients);
-        List<Recipe> recipes = (List<Recipe>) queryFindAll.getResultList();
-        return recipes;
+		Query queryFindAll = em
+				.createQuery(
+						"SELECT r from "
+								+ "cz.muni.fi.p243.studentRecipeBook.Recipe r WHERE r.ingredients = :ingredients ")
+				.setParameter("ingredients", ingredients);
+		List<Recipe> recipes = (List<Recipe>) queryFindAll.getResultList();
+		return recipes;
 	}
 
 	public List<Recipe> retrieveAllRecipes() {
 		Query queryFindAll = em.createQuery("SELECT r from "
-                + "cz.muni.fi.p243.studentRecipeBook.Recipe r ");
-        List<Recipe> recipes = (List<Recipe>) queryFindAll.getResultList();
-        return recipes;
+				+ "cz.muni.fi.p243.studentRecipeBook.Recipe r ");
+		List<Recipe> recipes = (List<Recipe>) queryFindAll.getResultList();
+		return recipes;
 	}
-	
-	private void validateRecipe(Recipe recipe){
-		if(recipe == null){
+
+	private void validateRecipe(Recipe recipe) {
+		if (recipe == null) {
 			throw new IllegalArgumentException("recept je null");
 		}
-		
-		if(recipe.getOwner() == null){
+
+		if (recipe.getOwner() == null) {
 			throw new IllegalArgumentException("autor receptu je null");
 		}
-		
-		if(recipe.getOwner().getId() == null){
+
+		if (recipe.getOwner().getId() == null) {
 			throw new IllegalArgumentException("autor receptu nema id");
 		}
-		
-		if(recipe.getIngredients() == null){
+
+		if (recipe.getIngredientList() == null) {
 			throw new IllegalArgumentException("prisady receptu su null");
 		}
 	}
+
+	@Override
+	public Recipe findRecipeById(Long id) {
+
+		return em.find(Recipe.class, id);
+	}
+
 }

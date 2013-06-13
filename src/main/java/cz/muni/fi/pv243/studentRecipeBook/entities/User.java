@@ -1,12 +1,18 @@
 package cz.muni.fi.pv243.studentRecipeBook.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 public class User implements Serializable{
@@ -25,12 +31,61 @@ public class User implements Serializable{
 	
 	@Column(nullable=false)
 	private String surname;
+
+    @NotNull
+    @NotEmpty
+    @Email
+    @Column(unique=true)
+	private String email;
+
+    @NotEmpty
+    private Date date;
+    
+    @NotEmpty
+    private boolean isAdmin = false;
 	
 	@Column(nullable=false)
 	private String passwd;
-	
-	@Column(nullable=false)
-    private UserRole userRole;
+
+	public User() {
+	}
+
+	public User(String firstName, String surname, String nick, String email, String password, boolean isAdmin) {
+		this.firstName = firstName;
+		this.surname = surname;
+		this.nick = nick;
+		this.email = email;
+		this.passwd = passwd;
+		this.isAdmin = isAdmin;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public boolean isAdmin() {
+		return isAdmin;
+	}
+
+	public void setAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
 
 	public Long getId() {
 		return id;
@@ -71,13 +126,13 @@ public class User implements Serializable{
 	public void setPasswd(String passwd) {
 		this.passwd = passwd;
 	}
-	
-	public UserRole getUserRole() {
-		return userRole;
-	}
 
-	public void setUserRole(UserRole userRole) {
-		this.userRole = userRole;
+	/**
+	 * generates the time, the user registrated
+	 */
+	@PrePersist
+	protected void onCreate() {
+		date = new Date();
 	}
 
 	@Override
