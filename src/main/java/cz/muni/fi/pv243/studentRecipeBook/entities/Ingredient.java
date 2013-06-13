@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Ingredient implements Serializable {
@@ -24,7 +25,18 @@ public class Ingredient implements Serializable {
 	private String description;
 
 	@Column(nullable = false)
-	private int quantity;
+	private String quantity;
+
+    @NotNull
+	private boolean obligatory;
+
+	public boolean isObligatory() {
+		return obligatory;
+	}
+
+	public void setObligatory(boolean obligatory) {
+		this.obligatory = obligatory;
+	}
 
 	public Long getId() {
 		return id;
@@ -50,11 +62,11 @@ public class Ingredient implements Serializable {
 		this.description = description;
 	}
 
-	public int getQuantity() {
+	public String getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(int quantity) {
+	public void setQuantity(String quantity) {
 		this.quantity = quantity;
 	}
 

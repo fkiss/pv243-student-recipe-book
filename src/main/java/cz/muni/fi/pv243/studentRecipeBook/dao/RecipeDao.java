@@ -15,10 +15,10 @@ public interface RecipeDao {
 	public void updateRecipe(Recipe recipe);
 	
 	public void deleteRecipe(Recipe recipe);
-	
+
 	public Recipe findRecipeByName(String name);
 	
-	public List<Recipe> findRecipesByIngredients(List<Ingredient> ingredients);
+	public Recipe findRecipeById(Long id);
 	
 	public List<Recipe> retrieveAllRecipes();
 	

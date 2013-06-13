@@ -43,7 +43,7 @@ public class IngredientDaoImpl implements IngredientDao {
 
 	public void deleteIngredient(Ingredient ingredient) {
 		if (ingredient == null) {
-            throw new IllegalArgumentException("Argument je null");
+            throw new IllegalArgumentException("Argument is null");
         }
 
         if (ingredient.getId() == null) {
@@ -64,8 +64,9 @@ public class IngredientDaoImpl implements IngredientDao {
         
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Ingredient> retrieveAllIngredients() {
-        Query query = em.createQuery("SELECT m FROM cz.muni.fi.p243.studentRecipeBook.User u");
+        Query query = em.createQuery("SELECT ingr FROM ingredient ingr");
         List<Ingredient> resultList = (List<Ingredient>) query.getResultList();
         return resultList;
 	}
