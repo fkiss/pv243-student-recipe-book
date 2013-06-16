@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head></h:head>
+<body>
+
+	<ui:composition template="/resources/template.xhtml">
+
+		<ui:define name="content">
+
+			<h:dataTable value="#{allSpecificUserRecipes}" var="_recipe"
+				rendered="#{not empty allSpecificUserRecipes}">
+				<h:column>
+					<f:facet name="header">name</f:facet>
+                #{_recipe.name}
+            </h:column>
+				<h:column>
+					<f:facet name="header">stars</f:facet>
+                #{_recipe.stars}
+            </h:column>
+				<h:column>
+					<f:facet name="header">time</f:facet>
+                #{_recipe.time}
+            </h:column>
+				<h:column>
+					<f:facet name="header">category</f:facet>
+                #{_recipe.foodCategory.label}
+            </h:column>
+				<h:column>
+					<f:facet name="header">created</f:facet>
+                #{_recipe.date}
+            </h:column>
+			</h:dataTable>
+		</ui:define>
+	</ui:composition>
+
+</body>
+</html>

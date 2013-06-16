@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<composite:interface componentType="dynamicFieldList">
+	<composite:attribute name="list" type="java.util.List" required="true" />
+</composite:interface>
+
+<composite:implementation>
+
+	<h:dataTable id="table" value="#{cc.model}" var="ingredient">
+		<h:column>
+			<h:outputLabel>name</h:outputLabel>
+			<h:inputText value="#{ingredient.name}" />
+		</h:column>
+		<h:column>
+			<h:outputLabel>description</h:outputLabel>
+			<h:inputText value="#{ingredient.description}" />
+		</h:column>
+		<h:column>
+			<h:outputLabel>quantity</h:outputLabel>
+			<h:inputText value="#{ingredient.quantity}" />
+		</h:column>
+		<h:column>
+			<h:outputLabel>obligatory</h:outputLabel>
+			<h:inputText value="#{ingredient.obligatory}" />
+		</h:column>
+		<h:column>
+			<h:commandButton value="remove" action="#{cc.remove}" />
+		</h:column>
+	</h:dataTable>
+	<h:commandButton value="add" action="#{cc.add}" />
+
+</composite:implementation>
+
+</html>
