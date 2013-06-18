@@ -28,7 +28,6 @@ public class CreateIngredientsController implements Serializable {
 	@Produces
 	private Ingredient inputIngredient = new Ingredient();
 
-	
 	// TOTO NEJAK PREROB... aby ti to pisalo ak sa tam vyskytne problem... mozno bude treba hned ukladat tie ingredienty
 	private FacesContext facesContext;
 	

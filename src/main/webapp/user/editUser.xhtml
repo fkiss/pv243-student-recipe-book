@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<f:metadata>
+	<f:event type="preRenderView"
+		listener="#{updateUserController.retrieve()}" />
+</f:metadata>
+
+<ui:composition template="/resources/template.xhtml">
+
+	<ui:define name="content">
+
+<h1>TODO: update passwd... not working (class updateUserController)</h1>
+<h2>ono to upravovanie uzivatela celkovo... nemeni sa v podstate nic, len heslo by sa malo dat zmenit...</h2>
+<br />
+<br />
+
+		<h:form id="updateUser">
+			<h:panelGrid columns="3">
+				<h:outputLabel for="nick">nick:</h:outputLabel>
+				<h:outputLabel id="nick" value="#{updateUserController.user.nick}" />
+				<h:message for="nick" />
+
+				<h:outputLabel for="firstName">first name:</h:outputLabel>
+				<h:outputLabel id="firstName" value="#{updateUserController.user.firstName}" />
+				<h:message for="firstName" />
+
+				<h:outputLabel for="surname">surname:</h:outputLabel>
+				<h:outputLabel id="surname" value="#{updateUserController.user.surname}" />
+				<h:message for="surname" />
+
+				<h:outputLabel for="email">email:</h:outputLabel>
+				<h:outputLabel id="email" value="#{updateUserController.user.email}" />
+				<h:message for="email" />
+
+				<h:outputLabel for="password">Enter new password:</h:outputLabel>
+				<h:inputSecret id="password" value="#{updateUserController.user.password}">
+					<f:validator validatorId="passwordValidator" />
+					<f:attribute name="confirmPassword" value="#{confirmPassword}" />
+				</h:inputSecret>
+				<h:message for="password" />
+
+				<h:outputLabel for="confirmPassword">Enter new password second time:</h:outputLabel>
+				<h:inputSecret id="confirmPassword" binding="#{confirmPassword}"
+					requiredMessage="Please enter confirm password" required="true" />
+				<h:message for="confirmPassword" />
+
+			</h:panelGrid>
+			<h:commandButton action="#{updateUserController.update()}"
+				id="update" value="update" />
+			<h:messages styleClass="messages" errorClass="invalid"
+				infoClass="valid" warnClass="warning" globalOnly="true" />
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>
+</html>

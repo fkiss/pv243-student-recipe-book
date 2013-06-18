@@ -1,8 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:f="http://java.sun.com/jsf/core">
 
 <ui:composition template="/resources/template.xhtml">
 
@@ -10,31 +10,30 @@
 
 		<h3>Recipe search bar</h3>
 
-		<!-- finder not implemented yet... -->
-
 		<h:form>
 			<h:inputText id="search" value="#{attributes}"
 				style=" width : 580px;" required="true"></h:inputText>
 			<h:commandButton value="Find!">
 			</h:commandButton>
+
 			<br />
 			<br />
+
 			<h:messages />
 
 			<h:dataTable value="#{recipeFinder.findRecipes(attributes)}"
 				var="_recipe" rendered="#{not empty attributes}">
-				
-				<h:column>
-					<f:facet name="header">owner Id</f:facet>
-                #{_recipe.owner.id}
-            	  </h:column>
+
 				<h:column>
 					<f:facet name="header">name</f:facet>
-                #{_recipe.name}
-            </h:column>
+					<h:link outcome="/recipe/recipe">
+						<f:param name="id" value="#{_recipe.id}" />
+						<h:outputText id="itemName" value="#{_recipe.name}" />
+					</h:link>
+				</h:column>
 				<h:column>
 					<f:facet name="header">description</f:facet>
-                #{_recipe.description}
+                #{_recipe.oneSentenceDescription}
             </h:column>
 				<h:column>
 					<f:facet name="header">stars</f:facet>
@@ -48,41 +47,25 @@
 					<f:facet name="header">category</f:facet>
                 #{_recipe.foodCategory.label}
             </h:column>
-				<h:column>
-					<f:facet name="header">created</f:facet>
-                #{_recipe.date}
-            </h:column>
-
-				<h:column>
-					<f:facet name="header">ingredients</f:facet>
-					<ui:repeat value="#{_recipe.ingredientList}" var="ingredient">
-						<f:facet name="header">ingredient</f:facet>
-						"#{ingredient.name}" 
-						<br />
-					</ui:repeat>
-				</h:column>
 			</h:dataTable>
 
 		</h:form>
 
+
 		<h3>recipe of the day:</h3>
 
 		<h:dataTable value="#{recipeForTheDay}" var="_recipe">
-			<h:column>
-				<f:facet name="header">Id</f:facet>
-                #{_recipe.id}
-            	</h:column>
-			<h:column>
-				<f:facet name="header">owner Id</f:facet>
-                #{_recipe.owner.id}
-            	  </h:column>
+
 			<h:column>
 				<f:facet name="header">name</f:facet>
-                #{_recipe.name}
-            </h:column>
+				<h:link outcome="/recipe/recipe">
+					<f:param name="id" value="#{_recipe.id}" />
+					<h:outputText id="itemName" value="#{_recipe.name}" />
+				</h:link>
+			</h:column>
 			<h:column>
 				<f:facet name="header">description</f:facet>
-                #{_recipe.description}
+                #{_recipe.oneSentenceDescription}
             </h:column>
 			<h:column>
 				<f:facet name="header">stars</f:facet>
@@ -96,16 +79,8 @@
 				<f:facet name="header">category</f:facet>
                 #{_recipe.foodCategory.label}
             </h:column>
-
-			<h:column>
-				<f:facet name="header">ingredients</f:facet>
-				<ui:repeat value="#{_recipe.ingredientList}" var="ingredient">
-					<f:facet name="header">ingredient</f:facet>
-						"#{ingredient.name}"
-						<br />
-				</ui:repeat>
-			</h:column>
 		</h:dataTable>
+
 	</ui:define>
 
 </ui:composition>

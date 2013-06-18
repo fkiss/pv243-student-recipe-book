@@ -38,6 +38,9 @@ public class Recipe implements Serializable {
 	private String description;
 
 	@NotNull
+	private String oneSentenceDescription;
+
+	@NotNull
 	private FoodCategory foodCategory;
 
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -58,7 +61,6 @@ public class Recipe implements Serializable {
 
 	private Date date;
 
-	//TODO : dorobit tu cenu
 	@Min(0)
 	private Integer price;
 
@@ -66,7 +68,8 @@ public class Recipe implements Serializable {
 	}
 
 	public Recipe(String name, String description, User owner,
-			FoodCategory category, Integer portions, Integer stars, Integer time) {
+			FoodCategory category, Integer portions, Integer stars,
+			Integer time, Integer price, String oneSentenceDescription) {
 
 		this.name = name;
 		this.description = description;
@@ -75,6 +78,7 @@ public class Recipe implements Serializable {
 		this.portions = portions;
 		this.stars = stars;
 		this.time = time;
+		this.oneSentenceDescription = oneSentenceDescription;
 	}
 
 	public Long getId() {
@@ -83,6 +87,14 @@ public class Recipe implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getOneSentenceDescription() {
+		return oneSentenceDescription;
+	}
+
+	public void setOneSentenceDescription(String oneSentenceDescription) {
+		this.oneSentenceDescription = oneSentenceDescription;
 	}
 
 	public String getName() {
@@ -168,8 +180,6 @@ public class Recipe implements Serializable {
 		hash += (id != null ? id.hashCode() : 0);
 		return hash;
 	}
-	
-	
 
 	public Integer getPrice() {
 		return price;

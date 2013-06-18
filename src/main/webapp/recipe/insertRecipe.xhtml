@@ -10,10 +10,6 @@
 	<f:event type="preRenderView"
 		listener="#{createIngredientsController.begin()}" />
 </f:metadata>
-<head>
-<title>Not present in rendered output</title>
-</head>
-<body>
 
 	<ui:composition template="/resources/template.xhtml">
 
@@ -98,6 +94,11 @@
 					<h:inputTextarea id="description" value="#{newRecipe.description}"
 						cols="30" rows="10" />
 					<h:message for="description" />
+					
+					<h:outputLabel for="oneSentenceDescription">One sentence description:</h:outputLabel>
+					<h:inputTextarea id="oneSentenceDescription" value="#{newRecipe.oneSentenceDescription}"
+						cols="30" rows="5" />
+					<h:message for="oneSentenceDescription" />
 
 					<h:outputLabel for="time">Enter time to cook (in min.):</h:outputLabel>
 					<h:inputText id="time" value="#{newRecipe.time}">
@@ -129,5 +130,4 @@
 
 	</ui:composition>
 
-</body>
 </html>

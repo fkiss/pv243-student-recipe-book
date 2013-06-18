@@ -43,7 +43,7 @@ public class CreateRecipeController implements Serializable {
 	private CreateIngredientsController createIngredientList;
 
 	private Recipe newRecipe = new Recipe();
-	
+
 	@Named
 	@Produces
 	public Recipe getNewRecipe() {

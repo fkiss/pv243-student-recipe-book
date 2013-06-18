@@ -38,30 +38,33 @@ public class DemoInitialize {
 	@PostConstruct
 	public void initialize() {
 
-		userDao.createUser(new User("filip", "kiss", "filip", "filip@gmial.com",
-				"filip", false));
-		userDao.createUser(new User("marek", "tuharsky", "marek", "tuharsky@gmail.com",
-				"marek", false));
-		userDao.createUser(new User("roman", "romanovic", "roman", "roman@gmail.com",
-				"roman", false));
+		userDao.createUser(new User("filip", "kiss", "filip",
+				"filip@gmial.com", "filip", false));
+		userDao.createUser(new User("marek", "tuharsky", "marek",
+				"tuharsky@gmail.com", "marek", false));
+		userDao.createUser(new User("roman", "romanovic", "roman",
+				"roman@gmail.com", "roman", false));
 		userDao.createUser(new User("tomas", "plevko", "tom",
 				"tomas@gmail.com", "tom", true));
 
 		User tomas = userDao.findUserByNick("tom");
 		User roman = userDao.findUserByNick("roman");
 
-		recipeDao
-				.createRecipe(new Recipe("halusky",
-						"nastruhaj zemiaky atd... ", tomas, FoodCategory.OTHER,
-						4, 0, 213));
+		recipeDao.createRecipe(new Recipe("halusky",
+				"nastruhaj zemiaky atd... ", tomas, FoodCategory.OTHER, 4, 0,
+				213, 50, "velmi jednoduche halusky starej matere"));
 		recipeDao.createRecipe(new Recipe("kebap",
 				"zoberieme maso, hranolky a tak dalej... ", tomas,
-				FoodCategory.FLESH, 3, 0, 121));
-		recipeDao.createRecipe(new Recipe("polievka", "zmiesame vodu, a pridame dalsie veci...",
-				roman, FoodCategory.SOUP, 4, 0, 12));
-		recipeDao.createRecipe(new Recipe("kolac",
-				"spravime cesto a dame piect do rury...", roman, FoodCategory.DESSERT, 4,
-				0, 12));
+				FoodCategory.FLESH, 3, 0, 121, 50, "pravy turecky kebap"));
+		recipeDao.createRecipe(new Recipe("polievka",
+				"zmiesame vodu, a pridame dalsie veci...", roman,
+				FoodCategory.SOUP, 4, 0, 12, 50,
+				"velmi jednoducha polievka, ktora zarucene chuti vyborne"));
+		recipeDao
+				.createRecipe(new Recipe("kolac",
+						"spravime cesto a dame piect do rury...", roman,
+						FoodCategory.DESSERT, 4, 0, 12, 100,
+						"kolac, ktroy si velmi rychlo sami pripravite aj v prostredi koleje"));
 
 		Recipe halusky = recipeDao.findRecipeByName("halusky");
 		Recipe kebap = recipeDao.findRecipeByName("kebap");
@@ -85,13 +88,14 @@ public class DemoInitialize {
 		kebap.getIngredientList().add(
 				new Ingredient("bryndza", "kvalitna", "40 dg", true));
 
-		polievka.getIngredientList()
-				.add(new Ingredient("pivo", "", "0.5 l", false));
+		polievka.getIngredientList().add(
+				new Ingredient("pivo", "", "0.5 l", false));
 		polievka.getIngredientList().add(
 				new Ingredient("korenie", "", "20 dl", false));
 		polievka.getIngredientList().add(
 				new Ingredient("cukor", "", "20 dg", false));
-		polievka.getIngredientList().add(new Ingredient("voda", "", "20 dl", true));
+		polievka.getIngredientList().add(
+				new Ingredient("voda", "", "20 dl", true));
 
 		kolac.getIngredientList().add(
 				new Ingredient("sol", "najlepsie alpska", "20 dg", true));
