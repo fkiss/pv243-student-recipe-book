@@ -11,123 +11,126 @@
 		listener="#{createIngredientsController.begin()}" />
 </f:metadata>
 
-	<ui:composition template="/resources/template.xhtml">
+<ui:composition template="/resources/template.xhtml">
 
-		<ui:define name="content">
+	<ui:define name="content">
 
-			<h:form>
+		<h:form>
 
-				<h3>Insert Ingredient</h3>
+			<h3>Insert Ingredient</h3>
 
-				<h:form id="insertIngredient">
-					<h:panelGrid columns="3">
-						<h:outputLabel for="name">Name:</h:outputLabel>
-						<h:inputText id="name" value="#{inputIngredient.name}" />
-						<h:message for="name" />
-
-						<h:outputLabel for="description">Description:</h:outputLabel>
-						<h:inputText id="description"
-							value="#{inputIngredient.description}" />
-						<h:message for="description" />
-
-						<h:outputLabel for="quantity">Quantity:</h:outputLabel>
-						<h:inputText id="quantity" value="#{inputIngredient.quantity}" />
-						<h:message for="quantity" />
-
-						<h:outputLabel for="obligatory">Obligatory:</h:outputLabel>
-						<h:selectBooleanCheckbox id="obligatory" value="#{inputIngredient.obligatory}" />
-						<h:message for="obligatory" />
-					</h:panelGrid>
-
-					<h:commandButton value="Add"
-						action="#{createIngredientsController.addIngredient()}" />
-				</h:form>
-
-				<br />
-				<br />
-
-				<h:dataTable value="#{createIngredientsController.ingredientList}"
-					var="_ingredient"
-					rendered="#{not empty createIngredientsController.ingredientList}">
-					<h:column>
-						<f:facet name="header">ID</f:facet>
-                #{_ingredient.id}
-            </h:column>
-					<h:column>
-						<f:facet name="header">name</f:facet>
-                #{_ingredient.name}
-            </h:column>
-					<h:column>
-						<f:facet name="header">description</f:facet>
-                #{_ingredient.description}
-            </h:column>
-					<h:column>
-						<f:facet name="header">quantity</f:facet>
-                #{_ingredient.quantity}
-            </h:column>
-					<h:column>
-						<f:facet name="header">obligatory</f:facet>
-                #{_ingredient.obligatory}
-            </h:column>
-					<h:column>
-						<f:facet name="header">Remove ingredient</f:facet>
-
-						<h:commandLink value="Delete"
-							action="#{createIngredientsController.deleteIngredient(_ingredient)}" />
-					</h:column>
-				</h:dataTable>
-
-			</h:form>
-
-			<br />
-			<br />
-
-			<h3>Insert Recipe properties</h3>
-
-			<h:form>
+			<h:form id="insertIngredient">
 				<h:panelGrid columns="3">
-					<h:outputLabel for="name">Enter recipe name:</h:outputLabel>
-					<h:inputText id="name" value="#{newRecipe.name}" />
+					<h:outputLabel for="name">Name:</h:outputLabel>
+					<h:inputText id="name" value="#{inputIngredient.name}"
+						requiredMessage="Please insert ingredient name" required="true" />
 					<h:message for="name" />
 
-					<h:outputLabel for="description">Enter description:</h:outputLabel>
-					<h:inputTextarea id="description" value="#{newRecipe.description}"
-						cols="30" rows="10" />
+					<h:outputLabel for="description">Description:</h:outputLabel>
+					<h:inputText id="description"
+						value="#{inputIngredient.description}"
+						requiredMessage="Please insert description" required="true" />
 					<h:message for="description" />
-					
-					<h:outputLabel for="oneSentenceDescription">One sentence description:</h:outputLabel>
-					<h:inputTextarea id="oneSentenceDescription" value="#{newRecipe.oneSentenceDescription}"
-						cols="30" rows="5" />
-					<h:message for="oneSentenceDescription" />
 
-					<h:outputLabel for="time">Enter time to cook (in min.):</h:outputLabel>
-					<h:inputText id="time" value="#{newRecipe.time}">
-						<f:validateLongRange minimum="0" />
-					</h:inputText>
-					<h:message for="time" />
+					<h:outputLabel for="quantity">Quantity:</h:outputLabel>
+					<h:inputText id="quantity" value="#{inputIngredient.quantity}"
+						requiredMessage="Please insert quantity" required="true" />
+					<h:message for="quantity" />
 
-					<h:outputLabel for="portions">Enter number of portions:</h:outputLabel>
-					<h:inputText id="portions" value="#{newRecipe.portions}">
-						<f:validateLongRange minimum="0" />
-					</h:inputText>
-					<h:message for="portions" />
-
-					<h:selectOneMenu id="foodCategory"
-						value="#{newRecipe.foodCategory}">
-						<f:selectItems value="#{createRecipeController.foodCategory}"
-							var="foodCategory" itemLabel="#{foodCategory.label}" />
-					</h:selectOneMenu>
-					<h:message for="foodCategory" />
+					<h:outputLabel for="obligatory">Obligatory:</h:outputLabel>
+					<h:selectBooleanCheckbox id="obligatory"
+						value="#{inputIngredient.obligatory}" />
+					<h:message for="obligatory" />
 				</h:panelGrid>
-				<h:commandButton action="#{createRecipeController.create()}"
-					value="create" />
-				<h:messages styleClass="messages" errorClass="invalid"
-					infoClass="valid" warnClass="warning" globalOnly="true" />
+
+				<h:commandButton value="Add"
+					action="#{createIngredientsController.addIngredient()}" />
 			</h:form>
 
+			<br />
+			<br />
 
-		</ui:define>
+			<h:dataTable value="#{createIngredientsController.ingredientList}"
+				var="_ingredient"
+				rendered="#{not empty createIngredientsController.ingredientList}">
+				<h:column>
+					<f:facet name="header">ID</f:facet>
+                #{_ingredient.id}
+            </h:column>
+				<h:column>
+					<f:facet name="header">name</f:facet>
+                #{_ingredient.name}
+            </h:column>
+				<h:column>
+					<f:facet name="header">description</f:facet>
+                #{_ingredient.description}
+            </h:column>
+				<h:column>
+					<f:facet name="header">quantity</f:facet>
+                #{_ingredient.quantity}
+            </h:column>
+				<h:column>
+					<f:facet name="header">obligatory</f:facet>
+                #{_ingredient.obligatory}
+            </h:column>
+				<h:column>
+					<f:facet name="header">Remove ingredient</f:facet>
 
-	</ui:composition>
+					<h:commandLink value="Delete"
+						action="#{createIngredientsController.deleteIngredient(_ingredient)}" />
+				</h:column>
+			</h:dataTable>
+
+		</h:form>
+
+		<br />
+		<br />
+
+		<h3>Insert Recipe properties</h3>
+
+		<h:form>
+			<h:panelGrid columns="3">
+				<h:outputLabel for="name">Enter recipe name:</h:outputLabel>
+				<h:inputText id="name" value="#{newRecipe.name}" />
+				<h:message for="name" />
+
+				<h:outputLabel for="description">Enter description:</h:outputLabel>
+				<h:inputTextarea id="description" value="#{newRecipe.description}"
+					cols="30" rows="10" />
+				<h:message for="description" />
+
+				<h:outputLabel for="oneSentenceDescription">One sentence description:</h:outputLabel>
+				<h:inputTextarea id="oneSentenceDescription"
+					value="#{newRecipe.oneSentenceDescription}" cols="30" rows="5" />
+				<h:message for="oneSentenceDescription" />
+
+				<h:outputLabel for="time">Enter time to cook (in min.):</h:outputLabel>
+				<h:inputText id="time" value="#{newRecipe.time}">
+					<f:validateLongRange minimum="0" />
+				</h:inputText>
+				<h:message for="time" />
+
+				<h:outputLabel for="portions">Enter number of portions:</h:outputLabel>
+				<h:inputText id="portions" value="#{newRecipe.portions}">
+					<f:validateLongRange minimum="0" />
+				</h:inputText>
+				<h:message for="portions" />
+
+				<h:selectOneMenu id="foodCategory" value="#{newRecipe.foodCategory}">
+					<f:selectItems value="#{createRecipeController.foodCategory}"
+						var="foodCategory" itemLabel="#{foodCategory.label}" />
+				</h:selectOneMenu>
+				<h:message for="foodCategory" />
+			</h:panelGrid>
+			<h:commandButton action="#{createRecipeController.create()}"
+				value="create" />
+			<h:messages styleClass="messages" errorClass="invalid"
+				infoClass="valid" warnClass="warning" globalOnly="true" />
+		</h:form>
+
+
+	</ui:define>
+
+</ui:composition>
 
 </html>

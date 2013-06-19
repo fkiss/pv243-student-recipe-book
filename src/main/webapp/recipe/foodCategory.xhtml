@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<f:metadata>
+	<f:viewParam name="label"
+		value="#{viewFoodCategoryController.foodCategory}" />
+	<f:event type="preRenderView"
+		listener="#{viewFoodCategoryController.retrieve()}" />
+</f:metadata>
+
+<ui:composition template="/resources/template.xhtml">
+
+	<ui:define name="content">
+
+		<h:outputLabel value="no recipes of this category yet"
+			rendered="#{empty viewFoodCategoryController.recipeList}" />
+
+		<h:dataTable value="#{viewFoodCategoryController.recipeList}"
+			var="_recipe"
+			rendered="#{not empty viewFoodCategoryController.recipeList}">
+
+			<h:column>
+				<f:facet name="header">name</f:facet>
+				<h:link outcome="/recipe/recipe">
+					<f:param name="id" value="#{_recipe.id}" />
+					<h:outputText id="itemName" value="#{_recipe.name}" />
+				</h:link>
+			</h:column>
+			<h:column>
+				<f:facet name="header">stars</f:facet>
+                #{_recipe.stars}
+            </h:column>
+			<h:column>
+				<f:facet name="header">time</f:facet>
+                #{_recipe.time}
+            </h:column>
+			<h:column>
+				<f:facet name="header">category</f:facet>
+                #{_recipe.foodCategory.label}
+            </h:column>
+			<h:column>
+				<f:facet name="header">created</f:facet>
+                #{_recipe.date}
+            </h:column>
+		</h:dataTable>
+
+	</ui:define>
+</ui:composition>
+</html>

@@ -8,6 +8,54 @@
 
 	<ui:define name="content">
 
+		<h3>recipe of the day:</h3>
+
+		<h:dataTable value="#{recipeForTheDay}" var="_recipe">
+
+			<h:column>
+				<f:facet name="header">name</f:facet>
+				<h:link outcome="/recipe/recipe">
+					<f:param name="id" value="#{_recipe.id}" />
+					<h:outputText id="itemName" value="#{_recipe.name}" />
+				</h:link>
+			</h:column>
+			<h:column>
+				<f:facet name="header">description</f:facet>
+                #{_recipe.oneSentenceDescription}
+            </h:column>
+			<h:column>
+				<f:facet name="header">stars</f:facet>
+                #{_recipe.stars}
+            </h:column>
+			<h:column>
+				<f:facet name="header">time</f:facet>
+                #{_recipe.time}
+            </h:column>
+			<h:column>
+				<f:facet name="header">category</f:facet>
+                #{_recipe.foodCategory.label}
+            </h:column>
+		</h:dataTable>
+		<br />
+		<br />
+
+		<h3>recipe categories:</h3>
+
+		<h:panelGrid columns="6">
+			<h:panelGroup>
+				<ui:repeat var="_category" value="#{foodCategoryBean.foodCategoryValues}">
+					<h:link outcome="/recipe/foodCategory">
+						<f:param name="label" value="#{_category.label}" />
+						<h:outputText value="#{_category.label}" />
+					</h:link>
+					&nbsp;
+				</ui:repeat>
+			</h:panelGroup>
+		</h:panelGrid>
+
+		<br />
+		<br />
+
 		<h3>Recipe search bar</h3>
 
 		<h:form>
@@ -51,35 +99,6 @@
 
 		</h:form>
 
-
-		<h3>recipe of the day:</h3>
-
-		<h:dataTable value="#{recipeForTheDay}" var="_recipe">
-
-			<h:column>
-				<f:facet name="header">name</f:facet>
-				<h:link outcome="/recipe/recipe">
-					<f:param name="id" value="#{_recipe.id}" />
-					<h:outputText id="itemName" value="#{_recipe.name}" />
-				</h:link>
-			</h:column>
-			<h:column>
-				<f:facet name="header">description</f:facet>
-                #{_recipe.oneSentenceDescription}
-            </h:column>
-			<h:column>
-				<f:facet name="header">stars</f:facet>
-                #{_recipe.stars}
-            </h:column>
-			<h:column>
-				<f:facet name="header">time</f:facet>
-                #{_recipe.time}
-            </h:column>
-			<h:column>
-				<f:facet name="header">category</f:facet>
-                #{_recipe.foodCategory.label}
-            </h:column>
-		</h:dataTable>
 
 	</ui:define>
 

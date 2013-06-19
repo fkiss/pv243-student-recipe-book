@@ -14,10 +14,10 @@ public class ViewRecipeController {
 
 	@Inject
 	private RecipeDao recipeDao;
-	
+
 	@Produces
 	private Recipe recipe;
-	
+
 	private Long id;
 
 	public Long getId() {
@@ -30,10 +30,11 @@ public class ViewRecipeController {
 
 	public void retrieve() {
 
-			recipe = recipeDao.findRecipeById(id);
+		recipe = recipeDao.findRecipeById(id);
 	}
-	
+
 	public Recipe getRecipe() {
+		
 		return recipe;
 	}
 

@@ -27,9 +27,6 @@ public class CreateIngredientsController implements Serializable {
 	@Named
 	@Produces
 	private Ingredient inputIngredient = new Ingredient();
-
-	// TOTO NEJAK PREROB... aby ti to pisalo ak sa tam vyskytne problem... mozno bude treba hned ukladat tie ingredienty
-	private FacesContext facesContext;
 	
 	@Inject
 	private Conversation conversation;
@@ -67,10 +64,8 @@ public class CreateIngredientsController implements Serializable {
     		
     		ingredientList.add(newIngredient);
         } catch (Exception e) {
-        	
-            String errorMessage = getRootErrorMessage(e);
-            FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, errorMessage, "Registration unsuccessful");
-			facesContext.addMessage(null, m);
+        	System.out.println(e);
+        	//TODO : pridat do logu...
         }
 	}
 
@@ -84,18 +79,4 @@ public class CreateIngredientsController implements Serializable {
 	public List<Ingredient> getIngredientList() {
 		return ingredientList;
 	}
-
-    private String getRootErrorMessage(Exception e) {
-        String errorMessage = "Registration failed. See server log for more information";
-        if (e == null) {
-            return errorMessage;
-        }
-        Throwable t = e;
-        while (t != null) {
-            errorMessage = t.getLocalizedMessage();
-            t = t.getCause();
-        }
-        return errorMessage;
-    }
-
 }
