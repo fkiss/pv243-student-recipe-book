@@ -8,7 +8,7 @@
 
 <f:metadata>
 	<f:event type="preRenderView"
-		listener="#{createIngredientsController.begin()}" />
+		listener="#{createRecipeController.begin()}" />
 </f:metadata>
 
 <ui:composition template="/resources/template.xhtml">
@@ -44,15 +44,15 @@
 				</h:panelGrid>
 
 				<h:commandButton value="Add"
-					action="#{createIngredientsController.addIngredient()}" />
+					action="#{createRecipeController.addIngredient()}" />
 			</h:form>
 
 			<br />
 			<br />
 
-			<h:dataTable value="#{createIngredientsController.ingredientList}"
+			<h:dataTable value="#{createRecipeController.ingredientList}"
 				var="_ingredient"
-				rendered="#{not empty createIngredientsController.ingredientList}">
+				rendered="#{not empty createRecipeController.ingredientList}">
 				<h:column>
 					<f:facet name="header">ID</f:facet>
                 #{_ingredient.id}
@@ -77,7 +77,7 @@
 					<f:facet name="header">Remove ingredient</f:facet>
 
 					<h:commandLink value="Delete"
-						action="#{createIngredientsController.deleteIngredient(_ingredient)}" />
+						action="#{createRecipeController.deleteIngredient(_ingredient)}" />
 				</h:column>
 			</h:dataTable>
 
@@ -115,6 +115,12 @@
 					<f:validateLongRange minimum="0" />
 				</h:inputText>
 				<h:message for="portions" />
+				 
+				<h:outputLabel for="price">Enter approximate price of the recipe (Kč):</h:outputLabel>
+				<h:inputText id="price" value="#{newRecipe.price}">
+					<f:validateLongRange minimum="0" />
+				</h:inputText>
+				<h:message for="portions" />
 
 				<h:selectOneMenu id="foodCategory" value="#{newRecipe.foodCategory}">
 					<f:selectItems value="#{createRecipeController.foodCategory}"
@@ -122,7 +128,7 @@
 				</h:selectOneMenu>
 				<h:message for="foodCategory" />
 			</h:panelGrid>
-			<h:commandButton action="#{createRecipeController.create()}"
+			<h:commandButton action="#{createRecipeController.createRecipe()}"
 				value="create" />
 			<h:messages styleClass="messages" errorClass="invalid"
 				infoClass="valid" warnClass="warning" globalOnly="true" />

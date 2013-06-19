@@ -52,7 +52,7 @@ public class DemoInitialize {
 
 		recipeDao.createRecipe(new Recipe("halusky",
 				"nastruhaj zemiaky atd... ", tomas, FoodCategory.OTHER, 4, 0,
-				213, 50, "velmi jednoduche halusky starej matere"));
+				213, 100, "velmi jednoduche halusky starej matere"));
 		recipeDao.createRecipe(new Recipe("kebap",
 				"zoberieme maso, hranolky a tak dalej... ", tomas,
 				FoodCategory.FLESH, 3, 0, 121, 50, "pravy turecky kebap"));

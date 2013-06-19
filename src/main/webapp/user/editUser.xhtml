@@ -15,40 +15,49 @@
 
 	<ui:define name="content">
 
-<h1>TODO: update passwd... not working (class updateUserController)</h1>
-<h2>ono to upravovanie uzivatela celkovo... nemeni sa v podstate nic, len heslo by sa malo dat zmenit...</h2>
-<br />
-<br />
+		<h1>User info</h1>
+		<br />
+		
+		<h:panelGrid columns="3">
+			<h:outputLabel for="nick">nick:</h:outputLabel>
+			<h:outputLabel id="nick" value="#{updateUserController.user.nick}" />
+			<h:message for="nick" />
 
-		<h:form id="updateUser">
+			<h:outputLabel for="firstName">first name:</h:outputLabel>
+			<h:outputLabel id="firstName"
+				value="#{updateUserController.user.firstName}" />
+			<h:message for="firstName" />
+
+			<h:outputLabel for="surname">surname:</h:outputLabel>
+			<h:outputLabel id="surname"
+				value="#{updateUserController.user.surname}" />
+			<h:message for="surname" />
+
+			<h:outputLabel for="email">email:</h:outputLabel>
+			<h:outputLabel id="email" value="#{updateUserController.user.email}" />
+			<h:message for="email" />
+		</h:panelGrid>
+		
+		<br />
+		<br />
+		<h2>Change password</h2>
+
+
+		<h:form id="updateUserPassword">
+
 			<h:panelGrid columns="3">
-				<h:outputLabel for="nick">nick:</h:outputLabel>
-				<h:outputLabel id="nick" value="#{updateUserController.user.nick}" />
-				<h:message for="nick" />
-
-				<h:outputLabel for="firstName">first name:</h:outputLabel>
-				<h:outputLabel id="firstName" value="#{updateUserController.user.firstName}" />
-				<h:message for="firstName" />
-
-				<h:outputLabel for="surname">surname:</h:outputLabel>
-				<h:outputLabel id="surname" value="#{updateUserController.user.surname}" />
-				<h:message for="surname" />
-
-				<h:outputLabel for="email">email:</h:outputLabel>
-				<h:outputLabel id="email" value="#{updateUserController.user.email}" />
-				<h:message for="email" />
-
-				<h:outputLabel for="password">Enter new password:</h:outputLabel>
-				<h:inputSecret id="password" value="#{updateUserController.user.password}">
+				<h:outputLabel for="newPassword">Enter new password:</h:outputLabel>
+				<h:inputSecret id="newPassword"
+					value="#{updateUserController.user.password}">
 					<f:validator validatorId="passwordValidator" />
 					<f:attribute name="confirmPassword" value="#{confirmPassword}" />
 				</h:inputSecret>
-				<h:message for="password" />
+				<h:message for="newPassword" />
 
-				<h:outputLabel for="confirmPassword">Enter new password second time:</h:outputLabel>
-				<h:inputSecret id="confirmPassword" binding="#{confirmPassword}"
+				<h:outputLabel for="confirmNewPassword">Enter new password second time:</h:outputLabel>
+				<h:inputSecret id="confirmNewPassword" binding="#{confirmPassword}"
 					requiredMessage="Please enter confirm password" required="true" />
-				<h:message for="confirmPassword" />
+				<h:message for="confirmNewPassword" />
 
 			</h:panelGrid>
 			<h:commandButton action="#{updateUserController.update()}"
@@ -57,6 +66,11 @@
 				infoClass="valid" warnClass="warning" globalOnly="true" />
 		</h:form>
 
+		<br />
+		<br />
+		<h2>Delete account</h2>
+		<br />
+<p>to delete the accout, please contact the admin (admin(at)recipebook.com)</p>
 	</ui:define>
 
 </ui:composition>

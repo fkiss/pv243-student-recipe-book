@@ -2,6 +2,7 @@ package cz.muni.fi.pv243.cookbook.DAO;
 
 import java.util.List;
 
+import cz.muni.fi.pv243.cookbook.model.Ingredient;
 import cz.muni.fi.pv243.cookbook.model.Recipe;
 
 public interface RecipeDao {
@@ -16,5 +17,5 @@ public interface RecipeDao {
 	
 	public Recipe findRecipeById(Long id);
 	
-	public List<Recipe> retrieveAllRecipes();
+	public List<Recipe> retrieveAllRecipes();	
 }

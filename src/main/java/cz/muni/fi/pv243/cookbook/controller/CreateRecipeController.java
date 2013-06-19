@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateful;
+import javax.enterprise.context.Conversation;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Produces;
@@ -36,12 +37,18 @@ public class CreateRecipeController implements Serializable {
 	@Inject
 	private IngredientDao ingredientDao;
 
+	@Named
+	@Produces
+	private Ingredient inputIngredient = new Ingredient();
+
+	private List<Ingredient> ingredientList = new ArrayList<Ingredient>();
+
+	@Inject
+	private Conversation conversation;
+
 	@Inject
 	private Login login;
 	
-	@Inject
-	private CreateIngredientsController createIngredientList;
-
 	private Recipe newRecipe = new Recipe();
 
 	@Named
@@ -50,15 +57,52 @@ public class CreateRecipeController implements Serializable {
 		return newRecipe;
 	}
 	
-	public CreateRecipeController() {
-	}
-	
 	public FoodCategory[] getFoodCategory() {
 		
         return FoodCategory.values();
     }
 
-	public void create() {
+	public void begin() {
+		if (conversation.isTransient()) {
+			conversation.begin();
+		}
+	}
+
+	public void cancel() {
+		conversation.end();
+	}
+	
+	public List<Ingredient> getIngredientList() {
+		return ingredientList;
+	}
+
+	public void addIngredient() {
+
+        try {
+    		Ingredient newIngredient = new Ingredient();
+    		
+    		newIngredient.setName(inputIngredient.getName());
+    		newIngredient.setDescription(inputIngredient.getDescription());
+    		newIngredient.setObligatory(inputIngredient.getObligatory());
+    		newIngredient.setQuantity(inputIngredient.getQuantity());
+
+    		ingredientDao.createIngredient(newIngredient);
+    		
+    		ingredientList.add(newIngredient);
+        } catch (Exception e) {
+        	System.out.println(e);
+        	//TODO : pridat do logu...
+        }
+	}
+
+	public void deleteIngredient(Ingredient ingredientToRemove) {
+
+		ingredientDao.removeIngredient(ingredientToRemove);
+		
+		ingredientList.remove(ingredientToRemove);
+	}
+	
+	public void createRecipe() {
 
 		if (login.isLoggedIn()) {
 
@@ -68,7 +112,7 @@ public class CreateRecipeController implements Serializable {
 
 				newRecipe.setStars(0);
 				
-				newRecipe.setIngredientList(createIngredientList.getIngredientList());
+				newRecipe.setIngredientList(getIngredientList());
 				
 				recipeDao.createRecipe(newRecipe);
 				

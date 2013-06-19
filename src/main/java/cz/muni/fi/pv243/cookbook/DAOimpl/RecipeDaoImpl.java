@@ -9,6 +9,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import cz.muni.fi.pv243.cookbook.DAO.RecipeDao;
+import cz.muni.fi.pv243.cookbook.model.Ingredient;
 import cz.muni.fi.pv243.cookbook.model.Recipe;
 
 @Stateless
@@ -47,7 +48,12 @@ public class RecipeDaoImpl implements RecipeDao {
 		editedRecipe.setFoodCategory(recipe.getFoodCategory());
 		editedRecipe.setPortions(recipe.getPortions());
 		editedRecipe.setTime(recipe.getTime());
+		editedRecipe.setPrice(recipe.getPrice());
+		editedRecipe.setStars(recipe.getStars());
+		editedRecipe.setOneSentenceDescription(recipe.getOneSentenceDescription());
 		editedRecipe.setIngredientList(recipe.getIngredientList());
+
+		manager.merge(editedRecipe);
 	}
 
 	@Override

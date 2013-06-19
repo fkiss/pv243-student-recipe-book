@@ -1,6 +1,9 @@
 package cz.muni.fi.pv243.cookbook.controller;
 
-import javax.enterprise.context.RequestScoped;
+import java.io.Serializable;
+
+import javax.enterprise.context.Conversation;
+import javax.enterprise.context.ConversationScoped;
 import javax.enterprise.inject.Produces;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -12,8 +15,13 @@ import cz.muni.fi.pv243.cookbook.login.Login;
 import cz.muni.fi.pv243.cookbook.model.User;
 
 @Named
-@RequestScoped
-public class UpdateUserController {
+@ConversationScoped
+public class UpdateUserController implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	@Inject
+	Conversation conversation;
 
 	@Inject
 	private UserDao userDao;
@@ -22,12 +30,13 @@ public class UpdateUserController {
 	private User user;
 
 	@Inject
-	private FacesContext facesContext;
-
-	@Inject
 	private Login login;
-	
+
 	public void retrieve() {
+
+		if (conversation.isTransient()) {
+			conversation.begin();
+		}
 
 		Long currentId = login.getCurrentUser().getId();
 		user = userDao.findUserByID(currentId);
@@ -39,21 +48,30 @@ public class UpdateUserController {
 
 	public void update() {
 
-		if (login.isLoggedIn()) {
+		FacesContext facesContext = FacesContext.getCurrentInstance();
 
-			try {
+		try {
+
+			if (login.isLoggedIn()) {
 				userDao.editUser(user);
 				String message = "account successfully updated";
 				facesContext.addMessage(null, new FacesMessage(message));
-			} catch (Exception e) {
-				String errorMessage = getRootErrorMessage(e);
-				FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-						errorMessage, "Update unsuccessful");
-				facesContext.addMessage(null, m);
-			}
-		} else {
 
-			facesContext.addMessage(null, new FacesMessage("please log in"));
+				conversation.end();
+
+			} else {
+
+				facesContext
+						.addMessage(null, new FacesMessage("please log in"));
+
+			}
+
+		} catch (Exception e) {
+			String errorMessage = getRootErrorMessage(e);
+			FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					errorMessage, "Update unsuccessful");
+			facesContext.addMessage(null, m);
+			conversation.end();
 		}
 	}
 
