@@ -10,13 +10,13 @@
 	<ui:composition template="/resources/template.xhtml">
 
 		<ui:define name="content">
-		
+
 			<h:dataTable value="#{allSpecificUserRecipes}" var="_recipe"
 				rendered="#{not empty allSpecificUserRecipes}">
 
 				<h:column>
 					<f:facet name="header">name</f:facet>
-						<h:outputText id="itemName" value="#{_recipe.name}" />
+					<h:outputText id="itemName" value="#{_recipe.name}" />
 				</h:column>
 				<h:column>
 					<f:facet name="header">stars</f:facet>
@@ -38,8 +38,9 @@
 
 					<h:link outcome="/recipe/editRecipe">
 						<f:param name="id" value="#{_recipe.id}" />
-						edit recipe
-						</h:link>
+
+						<h:commandButton value="edit recipe" />
+					</h:link>
 				</h:column>
 			</h:dataTable>
 		</ui:define>

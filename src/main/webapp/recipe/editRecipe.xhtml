@@ -17,7 +17,7 @@
 	<ui:define name="content">
 
 		<h1>Update recipe info</h1>
-		
+
 		<br />
 		<br />
 
@@ -64,8 +64,7 @@
 					<h:message for="name" />
 
 					<h:outputLabel for="description">Description:</h:outputLabel>
-					<h:inputText id="description"
-						value="#{editIngredient.description}" />
+					<h:inputText id="description" value="#{editIngredient.description}" />
 					<h:message for="description" />
 
 					<h:outputLabel for="quantity">Quantity:</h:outputLabel>
@@ -130,7 +129,7 @@
 
 				<h:selectOneMenu id="foodCategory"
 					value="#{updateRecipeController.recipe.foodCategory}">
-					<f:selectItems value="#{updateRecipeController.foodCategory}"
+					<f:selectItems value="#{foodCategoryBean.foodCategoryValues}"
 						var="foodCategory" itemLabel="#{foodCategory.label}" />
 				</h:selectOneMenu>
 				<h:message for="foodCategory" />
@@ -139,6 +138,7 @@
 				value="update" />
 			<h:messages styleClass="messages" errorClass="invalid"
 				infoClass="valid" warnClass="warning" globalOnly="true" />
+			<h:commandButton value="Delete" action="#{updateRecipeController.delete()}" />
 		</h:form>
 
 	</ui:define>

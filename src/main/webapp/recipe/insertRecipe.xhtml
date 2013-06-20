@@ -123,7 +123,7 @@
 				<h:message for="portions" />
 
 				<h:selectOneMenu id="foodCategory" value="#{newRecipe.foodCategory}">
-					<f:selectItems value="#{createRecipeController.foodCategory}"
+					<f:selectItems value="#{foodCategoryBean.foodCategoryValues}"
 						var="foodCategory" itemLabel="#{foodCategory.label}" />
 				</h:selectOneMenu>
 				<h:message for="foodCategory" />

@@ -73,13 +73,13 @@ public class DemoInitialize {
 
 		List<Ingredient> haluskyList = new ArrayList<Ingredient>();
 
+		halusky.setIngredientList(haluskyList);
+		
 		haluskyList.add(new Ingredient("zemiaky", "take gulate najlepsie", "4",
 				true));
 		haluskyList.add(new Ingredient("vajcia", "stredne velke", "3", true));
 		haluskyList.add(new Ingredient("mlieko", "kravske", "2 dl", true));
 		haluskyList.add(new Ingredient("slanina", "bravcova", "20 dg", false));
-
-		halusky.setIngredientList(haluskyList);
 
 		kebap.getIngredientList()
 				.add(new Ingredient("voda", "", "20 dl", true));

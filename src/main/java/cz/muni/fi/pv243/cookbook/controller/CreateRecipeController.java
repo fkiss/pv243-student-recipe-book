@@ -2,15 +2,24 @@ package cz.muni.fi.pv243.cookbook.controller;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.ejb.Stateful;
 import javax.enterprise.context.Conversation;
+import javax.enterprise.context.ConversationScoped;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Produces;
+import javax.faces.application.Application;
 import javax.faces.application.FacesMessage;
+import javax.faces.application.FacesMessage.Severity;
+import javax.faces.component.UIViewRoot;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.context.ResponseStream;
+import javax.faces.context.ResponseWriter;
+import javax.faces.render.RenderKit;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -23,14 +32,11 @@ import cz.muni.fi.pv243.cookbook.model.Ingredient;
 import cz.muni.fi.pv243.cookbook.model.Recipe;
 
 @Named
-@RequestScoped
+@ConversationScoped
 public class CreateRecipeController implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	@Inject
-	private FacesContext facesContext;
-
 	@Inject
 	private RecipeDao recipeDao;
 	
@@ -56,11 +62,6 @@ public class CreateRecipeController implements Serializable {
 	public Recipe getNewRecipe() {
 		return newRecipe;
 	}
-	
-	public FoodCategory[] getFoodCategory() {
-		
-        return FoodCategory.values();
-    }
 
 	public void begin() {
 		if (conversation.isTransient()) {
@@ -68,7 +69,13 @@ public class CreateRecipeController implements Serializable {
 		}
 	}
 
+	//TODO : add cancel button into the page
 	public void cancel() {
+		
+		for(Ingredient i: ingredientList) {
+			ingredientDao.removeIngredient(i);
+		}
+		
 		conversation.end();
 	}
 	
@@ -104,6 +111,8 @@ public class CreateRecipeController implements Serializable {
 	
 	public void createRecipe() {
 
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+
 		if (login.isLoggedIn()) {
 
 			try {
@@ -118,6 +127,8 @@ public class CreateRecipeController implements Serializable {
 				
 				String message = "recipe successfully created";
 				facesContext.addMessage(null, new FacesMessage(message));
+				
+				conversation.end();
 				
 			} catch (Exception e) {
 				String errorMessage = getRootErrorMessage(e);

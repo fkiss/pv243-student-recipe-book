@@ -19,10 +19,17 @@ import cz.muni.fi.pv243.cookbook.login.Login;
 import cz.muni.fi.pv243.cookbook.model.Ingredient;
 import cz.muni.fi.pv243.cookbook.model.Recipe;
 
+/**
+ * class used for updating the information about the recipes of particular author
+ * 
+ * @author tomas plevko <xplevko@mail.muni.cz>
+ *
+ */
 @Named
 @ConversationScoped
-public class UpdateRecipeController implements Serializable{
+public class UpdateRecipeController implements Serializable {
 
+	//TODO : zmenit, aby bola moznost editovania pristupna aj adminovi, zatial ma taku moznost iba autor receptu
 	private static final long serialVersionUID = 1L;
 
 	@Inject
@@ -33,7 +40,7 @@ public class UpdateRecipeController implements Serializable{
 
 	@Inject
 	private IngredientDao ingredientDao;
-	
+
 	private Recipe recipe;
 
 	@Named
@@ -53,68 +60,66 @@ public class UpdateRecipeController implements Serializable{
 		this.id = id;
 	}
 
-	public FoodCategory[] getFoodCategory() {
-		
-        return FoodCategory.values();
-    } 
-
-	//TODO : prerobiť, nefunguje ako by malo...
-	
-	@Named
-	@Produces
-	private List<Ingredient> ingredientList = new ArrayList<Ingredient>();
+	/**
+	 * method for initialisation of the update process of the ingredient
+	 */
 
 	public void retrieve() {
 
 		if (conversation.isTransient()) {
-			
+
 			conversation.begin();
-			
+
 			recipe = recipeDao.findRecipeById(id);
-			ingredientList.addAll(recipe.getIngredientList());
-			
-			recipe.getIngredientList().clear();
-			recipeDao.editRecipe(recipe);
 		}
 	}
 
 	public Recipe getRecipe() {
-		
+
 		return recipe;
 	}
 
 	public List<Ingredient> getIngredientList() {
-		return ingredientList;
+		return recipe.getIngredientList();
 	}
-	
+
+	/**
+	 * Method for adding the ingredients into the recipe
+	 */
 	public void addIngredient() {
 
-        try {
-    		Ingredient newIngredient = new Ingredient();
-    		
-    		newIngredient.setName(editIngredient.getName());
-    		newIngredient.setDescription(editIngredient.getDescription());
-    		newIngredient.setObligatory(editIngredient.getObligatory());
-    		newIngredient.setQuantity(editIngredient.getQuantity());
+		try {
+			Ingredient newIngredient = new Ingredient();
 
-    		ingredientList.add(newIngredient);
-    		
-    		ingredientDao.createIngredient(newIngredient);
-    		
-        } catch (Exception e) {
-        	System.out.println(e);
-        	//TODO : pridat do logu...
-        }
+			newIngredient.setName(editIngredient.getName());
+			newIngredient.setDescription(editIngredient.getDescription());
+			newIngredient.setObligatory(editIngredient.getObligatory());
+			newIngredient.setQuantity(editIngredient.getQuantity());
+
+			recipe.getIngredientList().add(newIngredient);
+
+			ingredientDao.createIngredient(newIngredient);
+
+		} catch (Exception e) {
+			System.out.println(e);
+			// TODO : pridat do logu...
+		}
 	}
+	
+	/**
+	 * Method used for the removing of ingredients from the ingredient list of the recipe
+	 * 
+	 * @param ingredientToRemove 
+	 */
 
 	public void deleteIngredient(Ingredient ingredientToRemove) {
 
-		ingredientDao.removeIngredient(ingredientToRemove);
-		
-		ingredientList.remove(ingredientToRemove);		
+		recipe.getIngredientList().remove(ingredientToRemove);
 	}
-	
 
+	/**
+	 * Method used for updating of the recipe, the user updates in the jsf page
+	 */
 	public void update() {
 
 		FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -122,7 +127,7 @@ public class UpdateRecipeController implements Serializable{
 		try {
 
 			if (login.isLoggedIn()) {
-				recipe.setIngredientList(getIngredientList());
+
 				recipeDao.editRecipe(recipe);
 				String message = "recipe successfully updated";
 				facesContext.addMessage(null, new FacesMessage(message));
@@ -143,6 +148,18 @@ public class UpdateRecipeController implements Serializable{
 			facesContext.addMessage(null, m);
 			conversation.end();
 		}
+	}
+
+	/**
+	 * Method for deleting the recipe
+	 * 
+	 * @return userRecipes - the jsf page, containing the remaining recipes of
+	 *         the user
+	 */
+	public String delete() {
+
+		recipeDao.removeRecipe(recipe);
+		return "userRecipes";
 	}
 
 	private String getRootErrorMessage(Exception e) {
