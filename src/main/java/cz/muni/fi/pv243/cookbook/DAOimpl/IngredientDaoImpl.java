@@ -87,7 +87,7 @@ public class IngredientDaoImpl implements IngredientDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Ingredient> retrieveAllIngredients() {
-		Query query = manager.createQuery("SELECT ingr FROM ingredient ingr");
+		Query query = manager.createQuery("SELECT ingr FROM Ingredient ingr");
 		List<Ingredient> resultList = (List<Ingredient>) query.getResultList();
 		return resultList;
 	}

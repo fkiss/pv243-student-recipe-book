@@ -60,17 +60,32 @@ public class DemoInitialize {
 				"zmiesame vodu, a pridame dalsie veci...", roman,
 				FoodCategory.SOUP, 4, 0, 12, 50,
 				"velmi jednoducha polievka, ktora zarucene chuti vyborne"));
-		recipeDao
-				.createRecipe(new Recipe("kolac",
-						"spravime cesto a dame piect do rury...", roman,
-						FoodCategory.DESSERT, 4, 0, 12, 100,
-						"kolac, ktroy si velmi rychlo sami pripravite aj v prostredi koleje"));
+		recipeDao.createRecipe(new Recipe("kolac",
+				"spravime cesto a dame piect do rury...", roman,
+				FoodCategory.DESSERT, 4, 0, 12, 100,
+				"kolac, ktroy si velmi rychlo sami pripravite aj v prostredi koleje"));
+                
+                                        recipeDao.createRecipe(new Recipe("kolac2",
+				"spravime cesto a dame piect do rury...", roman,
+				FoodCategory.DESSERT, 4, 0, 12, 100,
+				"kolac, ktroy si velmi rychlo sami pripravite aj v prostredi koleje"));
+                                        recipeDao.createRecipe(new Recipe("kolac3",
+				"spravime cesto a dame piect do rury...", roman,
+				FoodCategory.DESSERT, 4, 0, 12, 100,
+				"kolac, ktroy si velmi rychlo sami pripravite aj v prostredi koleje"));
+                                        recipeDao.createRecipe(new Recipe("kolac4",
+				"spravime cesto a dame piect do rury...", roman,
+				FoodCategory.DESSERT, 4, 0, 12, 100,
+				"kolac, ktroy si velmi rychlo sami pripravite aj v prostredi koleje"));
 
 		Recipe halusky = recipeDao.findRecipeByName("halusky");
 		Recipe kebap = recipeDao.findRecipeByName("kebap");
 		Recipe polievka = recipeDao.findRecipeByName("polievka");
 		Recipe kolac = recipeDao.findRecipeByName("kolac");
-
+                                        Recipe kolac2 = recipeDao.findRecipeByName("kolac2");
+                                        Recipe kolac3 = recipeDao.findRecipeByName("kolac3");
+                                        Recipe kolac4 = recipeDao.findRecipeByName("kolac4");
+                                        
 		List<Ingredient> haluskyList = new ArrayList<Ingredient>();
 
 		halusky.setIngredientList(haluskyList);
@@ -103,6 +118,27 @@ public class DemoInitialize {
 				new Ingredient("muka", "stredne velky", "1", true));
 		kolac.getIngredientList().add(
 				new Ingredient("cibula", "stredne velka", "5", false));
+                
+                                        kolac2.getIngredientList().add(
+				new Ingredient("sol", "najlepsie alpska", "20 dg", true));
+		kolac2.getIngredientList().add(
+				new Ingredient("muka", "stredne velky", "1", true));
+		kolac2.getIngredientList().add(
+				new Ingredient("cibula", "stredne velka", "5", false));
+                                        kolac2.getIngredientList().add(
+				new Ingredient("jablko", "stredne velka", "5", false));
+                                        kolac2.getIngredientList().add(
+				new Ingredient("cesnak", "stredne velka", "5", false));
+                                        kolac2.getIngredientList().add(
+				new Ingredient("kofola", "stredne velka", "5", false));
+                
+                                        kolac3.getIngredientList().add(
+				new Ingredient("sol", "najlepsie alpska", "20 dg", true));
+
+                                        kolac4.getIngredientList().add(
+				new Ingredient("sol", "najlepsie alpska", "20 dg", true));
+		kolac4.getIngredientList().add(
+				new Ingredient("muka", "stredne velky", "1", true));
 
 		for (Ingredient ing : halusky.getIngredientList()) {
 			ingredientDao.createIngredient(ing);
@@ -117,6 +153,18 @@ public class DemoInitialize {
 		}
 
 		for (Ingredient ing : polievka.getIngredientList()) {
+			ingredientDao.createIngredient(ing);
+		}
+                
+                                        for (Ingredient ing : kolac2.getIngredientList()) {
+			ingredientDao.createIngredient(ing);
+		}
+                                        
+                                        for (Ingredient ing : kolac3.getIngredientList()) {
+			ingredientDao.createIngredient(ing);
+		}
+                                        
+                                        for (Ingredient ing : kolac4.getIngredientList()) {
 			ingredientDao.createIngredient(ing);
 		}
 	}
