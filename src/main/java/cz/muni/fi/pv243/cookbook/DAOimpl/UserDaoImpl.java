@@ -9,12 +9,21 @@ import javax.persistence.Query;
 import cz.muni.fi.pv243.cookbook.DAO.UserDao;
 import cz.muni.fi.pv243.cookbook.model.User;
 import cz.muni.fi.pv243.cookbook.util.ShaEncoder;
+import cz.muni.fi.pv243.logging.UserLogger;
+import javax.inject.Inject;
+import org.jboss.solder.logging.Logger;
 
 @Stateless
 public class UserDaoImpl implements UserDao {
 
 	@PersistenceContext
 	private EntityManager manager;
+        
+                    @Inject
+	private Logger log;
+                    
+                    @Inject
+	private UserLogger userLogger;
 
 	@Override
 	public void createUser(User user) {
@@ -41,6 +50,7 @@ public class UserDaoImpl implements UserDao {
 		user.setPassword(digest);
 		
 		manager.persist(user);
+                                        userLogger.created(user.getFirstName(), user.getSurname());
 	}
 
 	@Override
@@ -56,18 +66,25 @@ public class UserDaoImpl implements UserDao {
 		}
 
 		User userToDelete = manager.find(User.class, user.getId());
+                
 		manager.remove(userToDelete);
+                                        userLogger.created(user.getFirstName(), user.getSurname());
 	}
 
 	@Override
 	public User findUserByID(Long id) {
-
-		return manager.find(User.class, id);
+                                        
+                                        User user = manager.find(User.class, id);
+                                        userLogger.found(user.getFirstName(), user.getSurname());
+                                        
+		return user;
 	}
 
 	@Override
 	public User findUserByNick(String nick) {
 		try {
+                                                            log.infof("Finding user with nick: %s", nick);
+                                                            
 			Query query = manager.createQuery(
 					"select u from User u where u.nick=:nick").setParameter(
 					"nick", nick);
@@ -80,6 +97,8 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public User findUserByEmail(String email) {
 		try {
+                                                            log.infof("Finding user with email: %s", email);
+                                                            
 			Query query = manager.createQuery(
 					"select u from User u where u.email=:email").setParameter(
 					"email", email);
@@ -103,6 +122,9 @@ public class UserDaoImpl implements UserDao {
 		u.setEmail(user.getEmail());
 		String digest = ShaEncoder.hash(user.getPassword());
 		u.setPassword(digest);
+                
 		manager.merge(u);
+                                        userLogger.edited(user.getFirstName(), user.getSurname());
+
 	}
 }

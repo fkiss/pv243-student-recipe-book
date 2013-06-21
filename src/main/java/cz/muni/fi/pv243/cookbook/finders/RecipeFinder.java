@@ -51,7 +51,7 @@ public class RecipeFinder {
 
 		if(recipeList.isEmpty()) {
 			
-			throw new IllegalArgumentException("No recipes found!");
+			//throw new IllegalArgumentException("No recipes found!");
 		}
 		
 		return recipeList;

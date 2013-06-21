@@ -35,7 +35,8 @@
 							value="my recipes" rendered="#{login.loggedIn}" /></li>
 					<li><h:link outcome="/user/editUser"
 							value="account" rendered="#{login.loggedIn}" /></li>
-					<li><h:link outcome="/user/userLogin" value="Login" /></li>
+					<li><h:link outcome="/user/userLogin" value="Login" rendered="#{!login.loggedIn}"/></li>
+                                                                                                    <li><h:link outcome="/user/userLogin" value="Log Out" rendered="#{login.loggedIn}"/></li>
 				</ul>
 			</div>
 		</div>
