@@ -1,4 +1,4 @@
-package cz.muni.fi.pv243.logging;
+package cz.muni.fi.pv243.cookbook.logging;
 
 import org.jboss.solder.logging.Log;
 import org.jboss.solder.logging.MessageLogger;

@@ -7,9 +7,9 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import cz.muni.fi.pv243.cookbook.DAO.UserDao;
+import cz.muni.fi.pv243.cookbook.logging.UserLogger;
 import cz.muni.fi.pv243.cookbook.model.User;
 import cz.muni.fi.pv243.cookbook.util.ShaEncoder;
-import cz.muni.fi.pv243.logging.UserLogger;
 import javax.inject.Inject;
 import org.jboss.solder.logging.Logger;
 

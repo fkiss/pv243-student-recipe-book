@@ -9,8 +9,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import cz.muni.fi.pv243.cookbook.DAO.RecipeDao;
+import cz.muni.fi.pv243.cookbook.logging.RecipeLogger;
 import cz.muni.fi.pv243.cookbook.model.Recipe;
-import cz.muni.fi.pv243.logging.RecipeLogger;
 import javax.inject.Inject;
 import org.jboss.solder.logging.Logger;
 
@@ -96,7 +96,7 @@ public class RecipeDaoImpl implements RecipeDao {
 	@Override
 	public List<Recipe> retrieveAllRecipes() {
             
-                                        log.info("Retrieving all recipes");
+                                        log.info("Retrieving all recipes.");
                                         
 		Query query = manager.createQuery("select r from Recipe r");
                 
@@ -105,7 +105,7 @@ public class RecipeDaoImpl implements RecipeDao {
 
 	private void validateRecipe(Recipe recipe) {
                                         
-                                        log.info("Validating all recipes");
+                                        log.info("Validating all recipes.");
                                         
 		if (recipe == null) {
 			throw new IllegalArgumentException("recipe is null");

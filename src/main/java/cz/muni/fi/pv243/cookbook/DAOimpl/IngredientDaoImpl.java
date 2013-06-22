@@ -8,8 +8,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import cz.muni.fi.pv243.cookbook.DAO.IngredientDao;
+import cz.muni.fi.pv243.cookbook.logging.IngredientLogger;
 import cz.muni.fi.pv243.cookbook.model.Ingredient;
-import cz.muni.fi.pv243.logging.IngredientLogger;
 import javax.inject.Inject;
 import org.jboss.solder.logging.Logger;
 
@@ -103,7 +103,7 @@ public class IngredientDaoImpl implements IngredientDao {
 	@Override
 	public List<Ingredient> retrieveAllIngredients() {
             
-                                 	log.info("Retrieving all ingredients");
+                                 	log.info("Retrieving all ingredients.");
                                         
 		Query query = manager.createQuery("SELECT ingr FROM Ingredient ingr");
 		List<Ingredient> resultList = (List<Ingredient>) query.getResultList();
