@@ -1,6 +1,5 @@
 package cz.muni.fi.pv243.cookbook.DAOimpl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;

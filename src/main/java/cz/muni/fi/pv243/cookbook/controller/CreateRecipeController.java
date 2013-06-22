@@ -2,31 +2,19 @@ package cz.muni.fi.pv243.cookbook.controller;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-import javax.ejb.Stateful;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
-import javax.enterprise.context.RequestScoped;
-import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Produces;
-import javax.faces.application.Application;
 import javax.faces.application.FacesMessage;
-import javax.faces.application.FacesMessage.Severity;
-import javax.faces.component.UIViewRoot;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.faces.context.ResponseStream;
-import javax.faces.context.ResponseWriter;
-import javax.faces.render.RenderKit;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 
 import cz.muni.fi.pv243.cookbook.DAO.IngredientDao;
 import cz.muni.fi.pv243.cookbook.DAO.RecipeDao;
-import cz.muni.fi.pv243.cookbook.categories.FoodCategory;
 import cz.muni.fi.pv243.cookbook.login.Login;
 import cz.muni.fi.pv243.cookbook.model.Ingredient;
 import cz.muni.fi.pv243.cookbook.model.Recipe;

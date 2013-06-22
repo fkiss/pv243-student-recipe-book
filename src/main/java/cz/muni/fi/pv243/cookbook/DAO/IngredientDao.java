@@ -2,8 +2,6 @@ package cz.muni.fi.pv243.cookbook.DAO;
 
 import java.util.List;
 
-import javax.persistence.Query;
-
 import cz.muni.fi.pv243.cookbook.model.Ingredient;
 
 public interface IngredientDao {

@@ -1,7 +1,6 @@
 package cz.muni.fi.pv243.cookbook.controller;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.enterprise.context.Conversation;
@@ -14,7 +13,6 @@ import javax.inject.Named;
 
 import cz.muni.fi.pv243.cookbook.DAO.IngredientDao;
 import cz.muni.fi.pv243.cookbook.DAO.RecipeDao;
-import cz.muni.fi.pv243.cookbook.categories.FoodCategory;
 import cz.muni.fi.pv243.cookbook.login.Login;
 import cz.muni.fi.pv243.cookbook.model.Ingredient;
 import cz.muni.fi.pv243.cookbook.model.Recipe;

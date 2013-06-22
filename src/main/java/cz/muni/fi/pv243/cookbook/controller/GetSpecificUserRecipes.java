@@ -3,7 +3,6 @@ package cz.muni.fi.pv243.cookbook.controller;
 import java.util.List;
 
 import javax.ejb.Stateful;
-import javax.enterprise.context.Dependent;
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Model;
 import javax.enterprise.inject.Produces;
@@ -13,7 +12,6 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import cz.muni.fi.pv243.cookbook.DAO.RecipeDao;
 import cz.muni.fi.pv243.cookbook.login.Login;
 import cz.muni.fi.pv243.cookbook.model.Recipe;
 import cz.muni.fi.pv243.cookbook.model.User;

@@ -1,7 +1,6 @@
 package cz.muni.fi.pv243.cookbook.model;
 
 import cz.muni.fi.pv243.cookbook.categories.FoodCategory;
-import cz.muni.fi.pv243.cookbook.model.User;
 
 import java.io.Serializable;
 import java.lang.Long;

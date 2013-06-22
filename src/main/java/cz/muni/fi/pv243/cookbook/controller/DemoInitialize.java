@@ -9,7 +9,6 @@ import javax.ejb.Startup;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 import cz.muni.fi.pv243.cookbook.DAO.IngredientDao;
 import cz.muni.fi.pv243.cookbook.DAO.RecipeDao;
