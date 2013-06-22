@@ -42,7 +42,7 @@ public class Recipe implements Serializable {
 	@NotNull
 	private FoodCategory foodCategory;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "owner_id", referencedColumnName = "id")
 	private User owner;
 
@@ -55,7 +55,7 @@ public class Recipe implements Serializable {
 	@Min(0)
 	private Integer time;
 
-	@OneToMany(fetch = FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Ingredient> ingredientList = new ArrayList<Ingredient>();
 
 	private Date date;

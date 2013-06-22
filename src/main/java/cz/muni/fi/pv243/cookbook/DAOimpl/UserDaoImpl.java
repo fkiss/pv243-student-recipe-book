@@ -7,11 +7,11 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import cz.muni.fi.pv243.cookbook.DAO.UserDao;
-import cz.muni.fi.pv243.cookbook.logging.UserLogger;
+//import cz.muni.fi.pv243.cookbook.logging.UserLogger;
 import cz.muni.fi.pv243.cookbook.model.User;
 import cz.muni.fi.pv243.cookbook.util.ShaEncoder;
-import javax.inject.Inject;
-import org.jboss.solder.logging.Logger;
+//import javax.inject.Inject;
+//import org.jboss.solder.logging.Logger;
 
 @Stateless
 public class UserDaoImpl implements UserDao {
@@ -19,11 +19,11 @@ public class UserDaoImpl implements UserDao {
 	@PersistenceContext
 	private EntityManager manager;
         
-                    @Inject
-	private Logger log;
-                    
-                    @Inject
-	private UserLogger userLogger;
+//                    @Inject
+//	private Logger log;
+//                    
+//                    @Inject
+//	private UserLogger userLogger;
 
 	@Override
 	public void createUser(User user) {
@@ -50,7 +50,7 @@ public class UserDaoImpl implements UserDao {
 		user.setPassword(digest);
 		
 		manager.persist(user);
-                                        userLogger.created(user.getFirstName(), user.getSurname());
+//                                        userLogger.created(user.getFirstName(), user.getSurname());
 	}
 
 	@Override
@@ -68,14 +68,14 @@ public class UserDaoImpl implements UserDao {
 		User userToDelete = manager.find(User.class, user.getId());
                 
 		manager.remove(userToDelete);
-                                        userLogger.created(user.getFirstName(), user.getSurname());
+//                                        userLogger.created(user.getFirstName(), user.getSurname());
 	}
 
 	@Override
 	public User findUserByID(Long id) {
                                         
                                         User user = manager.find(User.class, id);
-                                        userLogger.found(user.getFirstName(), user.getSurname());
+//                                        userLogger.found(user.getFirstName(), user.getSurname());
                                         
 		return user;
 	}
@@ -83,7 +83,7 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public User findUserByNick(String nick) {
 		try {
-                                                            log.infof("Finding user with nick: %s", nick);
+//                                                            log.infof("Finding user with nick: %s", nick);
                                                             
 			Query query = manager.createQuery(
 					"select u from User u where u.nick=:nick").setParameter(
@@ -97,7 +97,7 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public User findUserByEmail(String email) {
 		try {
-                                                            log.infof("Finding user with email: %s", email);
+//                                                            log.infof("Finding user with email: %s", email);
                                                             
 			Query query = manager.createQuery(
 					"select u from User u where u.email=:email").setParameter(
@@ -124,7 +124,7 @@ public class UserDaoImpl implements UserDao {
 		u.setPassword(digest);
                 
 		manager.merge(u);
-                                        userLogger.edited(user.getFirstName(), user.getSurname());
+//                                        userLogger.edited(user.getFirstName(), user.getSurname());
 
 	}
 }

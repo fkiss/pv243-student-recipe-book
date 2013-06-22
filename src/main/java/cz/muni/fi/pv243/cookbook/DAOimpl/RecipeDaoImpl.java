@@ -9,10 +9,10 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import cz.muni.fi.pv243.cookbook.DAO.RecipeDao;
-import cz.muni.fi.pv243.cookbook.logging.RecipeLogger;
+//import cz.muni.fi.pv243.cookbook.logging.RecipeLogger;
 import cz.muni.fi.pv243.cookbook.model.Recipe;
-import javax.inject.Inject;
-import org.jboss.solder.logging.Logger;
+//import javax.inject.Inject;
+//import org.jboss.solder.logging.Logger;
 
 @Stateless
 public class RecipeDaoImpl implements RecipeDao {
@@ -20,11 +20,11 @@ public class RecipeDaoImpl implements RecipeDao {
 	@PersistenceContext
 	private EntityManager manager;
         
-                    @Inject
-	private Logger log;
+//                    @Inject
+//	private Logger log;
                     
-                    @Inject
-	private RecipeLogger recipeLogger;
+//                    @Inject
+//	private RecipeLogger recipeLogger;
 
 	@Override
 	public void createRecipe(Recipe recipe) {
@@ -32,7 +32,7 @@ public class RecipeDaoImpl implements RecipeDao {
 		validateRecipe(recipe);
 
 		manager.persist(recipe);
-                                        recipeLogger.created(recipe.getName());
+//                                        recipeLogger.created(recipe.getName());
 	}
 
 	@Override
@@ -42,7 +42,7 @@ public class RecipeDaoImpl implements RecipeDao {
 
 		Recipe r = manager.find(Recipe.class, recipe.getId());
 		manager.remove(r);
-                                        recipeLogger.deleted(recipe.getName());
+//                                        recipeLogger.deleted(recipe.getName());
 	}
 
 	@Override
@@ -64,7 +64,7 @@ public class RecipeDaoImpl implements RecipeDao {
 		editedRecipe.setIngredientList(recipe.getIngredientList());
 
 		manager.merge(editedRecipe);
-                                        recipeLogger.edited(recipe.getName());
+//                                        recipeLogger.edited(recipe.getName());
 
 	}
 
@@ -75,7 +75,7 @@ public class RecipeDaoImpl implements RecipeDao {
 			Query query = manager.createQuery(
 					"select r from Recipe r where r.name=:name").setParameter(
 					"name", name);
-                                                            recipeLogger.found(name);
+//                                                            recipeLogger.found(name);
                                                             
 			return (Recipe) query.getSingleResult();
 		} catch (NoResultException e) {
@@ -87,7 +87,7 @@ public class RecipeDaoImpl implements RecipeDao {
 	public Recipe findRecipeById(Long id) {
             
                                         Recipe recipe = manager.find(Recipe.class, id);
-                                        recipeLogger.found(recipe.getName());
+//                                        recipeLogger.found(recipe.getName());
                                         
 		return recipe;
 	}
@@ -96,7 +96,7 @@ public class RecipeDaoImpl implements RecipeDao {
 	@Override
 	public List<Recipe> retrieveAllRecipes() {
             
-                                        log.info("Retrieving all recipes.");
+//                                        log.info("Retrieving all recipes.");
                                         
 		Query query = manager.createQuery("select r from Recipe r");
                 
@@ -105,7 +105,7 @@ public class RecipeDaoImpl implements RecipeDao {
 
 	private void validateRecipe(Recipe recipe) {
                                         
-                                        log.info("Validating all recipes.");
+//                                        log.info("Validating all recipes.");
                                         
 		if (recipe == null) {
 			throw new IllegalArgumentException("recipe is null");

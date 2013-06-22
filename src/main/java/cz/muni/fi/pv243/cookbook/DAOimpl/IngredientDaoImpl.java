@@ -8,10 +8,10 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import cz.muni.fi.pv243.cookbook.DAO.IngredientDao;
-import cz.muni.fi.pv243.cookbook.logging.IngredientLogger;
+//import cz.muni.fi.pv243.cookbook.logging.IngredientLogger;
 import cz.muni.fi.pv243.cookbook.model.Ingredient;
-import javax.inject.Inject;
-import org.jboss.solder.logging.Logger;
+//import javax.inject.Inject;
+//import org.jboss.solder.logging.Logger;
 
 @Stateless
 public class IngredientDaoImpl implements IngredientDao {
@@ -19,11 +19,11 @@ public class IngredientDaoImpl implements IngredientDao {
 	@PersistenceContext
 	private EntityManager manager;
         
-                    @Inject
-	private Logger log;
-                    
-                    @Inject
-	private IngredientLogger ingredientLogger;
+//                    @Inject
+//	private Logger log;
+//                    
+//                    @Inject
+//	private IngredientLogger ingredientLogger;
 
 	@Override
 	public void createIngredient(Ingredient ingredient) {
@@ -38,7 +38,7 @@ public class IngredientDaoImpl implements IngredientDao {
 		}
 
 		manager.persist(ingredient);
-                                        ingredientLogger.created(ingredient.getName());
+//                                        ingredientLogger.created(ingredient.getName());
 	}
 
 	@Override
@@ -56,7 +56,8 @@ public class IngredientDaoImpl implements IngredientDao {
 		editedIngredient.setDescription(ingredient.getDescription());
 		editedIngredient.setObligatory(ingredient.getObligatory());
                 
-                                        ingredientLogger.edited(ingredient.getName());
+                                        manager.merge(editedIngredient);
+//                                        ingredientLogger.edited(ingredient.getName());
 	}
 
 	@Override
@@ -75,7 +76,7 @@ public class IngredientDaoImpl implements IngredientDao {
 				ingredient.getId());
 
 		manager.remove(ingredientToRemove);
-                                        ingredientLogger.deleted(ingredient.getName());
+//                                        ingredientLogger.deleted(ingredient.getName());
 	}
 
 	@Override
@@ -94,7 +95,7 @@ public class IngredientDaoImpl implements IngredientDao {
 		}
                                         
                                         Ingredient ingredient = manager.find(Ingredient.class, id);
-                                        ingredientLogger.found(ingredient.getName());
+//                                        ingredientLogger.found(ingredient.getName());
                                         
 		return ingredient;
 	}
@@ -103,7 +104,7 @@ public class IngredientDaoImpl implements IngredientDao {
 	@Override
 	public List<Ingredient> retrieveAllIngredients() {
             
-                                 	log.info("Retrieving all ingredients.");
+//                                 	log.info("Retrieving all ingredients.");
                                         
 		Query query = manager.createQuery("SELECT ingr FROM Ingredient ingr");
 		List<Ingredient> resultList = (List<Ingredient>) query.getResultList();
