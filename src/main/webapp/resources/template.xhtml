@@ -39,6 +39,10 @@
 							rendered="#{!identity.loggedIn}" /></li>
 					<li><h:link outcome="/userLogin" value="Log Out"
 							rendered="#{identity.loggedIn}" /></li>
+					<li><h:link outcome="/admin/allRecipesList" value="all recipes"
+							rendered="#{loggedUserController.admin}" /></li>
+					<li><h:link outcome="/admin/userList" value="all users"
+							rendered="#{loggedUserController.admin}" /></li>
 				</ul>
 			</div>
 		</div>

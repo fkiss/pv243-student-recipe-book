@@ -12,10 +12,11 @@ import javax.inject.Named;
 
 import cz.muni.fi.pv243.cookbook.DAO.RecipeDao;
 import cz.muni.fi.pv243.cookbook.DAO.UserDao;
+import cz.muni.fi.pv243.cookbook.DAOimpl.RecipeDaoImpl;
 import cz.muni.fi.pv243.cookbook.model.Recipe;
 import cz.muni.fi.pv243.cookbook.model.User;
 
-@SessionScoped
+@RequestScoped
 @Named
 public class AdminOperationsController implements Serializable {
 
@@ -27,30 +28,50 @@ public class AdminOperationsController implements Serializable {
 	@Inject
 	RecipeDao recipeDao;
 
+	/**
+	 * admin can't delete another admin, and even himself
+	 * 
+	 * @param id - id of the user to be deleted
+	 * @return
+	 */
 	public String deleteUser(Long id) {
+		
+		List<Recipe> allRecipesList = recipeDao.retrieveAllRecipes();
+		
+		for(Recipe r: allRecipesList) {
+			if(r.getOwner().getId() == id) {
+				recipeDao.removeRecipe(r);
+			}
+		}
+		
+		User userToDelete = userDao.findUserByID(id);
+		
+		if(!userToDelete.isAdmin()) {
+			
+			userDao.removeUser(userToDelete);
+		}
 
-		userDao.removeUser(userDao.findUserByID(id));
 		return "admin/userList";
 	}
 
-	public String deleteRecipe(Recipe recipe) {
+	/**
+	 * delete recipe
+	 * 
+	 * @param id - id of the recipe
+	 * @return
+	 */
+	public String deleteRecipe(Long id) {
 		
-		System.out.println(recipe.getName());
-		
-		recipeDao.removeRecipe(recipe);
+		recipeDao.removeRecipe(recipeDao.findRecipeById(id));
 		
 		return "admin/allRecipesList";
 	}
 	
-    @Produces
-    @Model
     public List<User> getAllUsers () {
     	
 		return userDao.retreiveAllUsers();    	
     }
 
-    @Produces
-    @Model
     public List<Recipe> getAllRecipes () {
     	
     	return recipeDao.retrieveAllRecipes();

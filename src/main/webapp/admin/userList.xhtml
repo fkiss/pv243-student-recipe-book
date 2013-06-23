@@ -8,35 +8,37 @@
 
 	<ui:define name="content">
 
-		<h:dataTable value="#{adminOperationsController.allUsers}" var="_user"
-			rendered="#{not empty adminOperationsController.allUsers}">
-			<h:column>
-				<f:facet name="header">Id</f:facet>
+		<h:form>
+			<h:dataTable value="#{adminOperationsController.allUsers}"
+				var="_user"
+				rendered="#{not empty adminOperationsController.allUsers}">
+				<h:column>
+					<f:facet name="header">Id</f:facet>
                 #{_user.id}
             </h:column>
-			<h:column>
-				<f:facet name="header">nick</f:facet>
+				<h:column>
+					<f:facet name="header">nick</f:facet>
                 #{_user.nick}
             </h:column>
-			<h:column>
-				<f:facet name="header">First name</f:facet>
+				<h:column>
+					<f:facet name="header">First name</f:facet>
                 #{_user.firstName}
             </h:column>
-			<h:column>
-				<f:facet name="header">Surname</f:facet>
+				<h:column>
+					<f:facet name="header">Surname</f:facet>
                 #{_user.surname}
             </h:column>
-			<h:column>
-				<f:facet name="header">e-mail</f:facet>
+				<h:column>
+					<f:facet name="header">e-mail</f:facet>
                 #{_user.email}
             </h:column>
 
-			<h:column>
-				<h:commandButton value="Delete"
-					action="#{adminOperationsController.deleteUser(_user.id)}" />
-			</h:column>
-		</h:dataTable>
-
+				<h:column>
+					<h:commandButton value="Delete"
+						action="#{adminOperationsController.deleteUser(_user.id)}" />
+				</h:column>
+			</h:dataTable>
+		</h:form>
 	</ui:define>
 
 </ui:composition>

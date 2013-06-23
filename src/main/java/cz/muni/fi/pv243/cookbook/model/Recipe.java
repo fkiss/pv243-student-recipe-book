@@ -44,7 +44,7 @@ public class Recipe implements Serializable {
 	@NotNull
 	private FoodCategory foodCategory;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "owner_id", referencedColumnName = "id")
 	private User owner;
 
