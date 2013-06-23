@@ -9,7 +9,7 @@
   <!-- Example configuration for a remote JBoss Enterprise Application Platform 6 or AS 7 instance -->
   <container qualifier="JBOSS_AS_MANAGED_7.x" default="true">
     <configuration>
-      <property name="jbossHome">/home/fkiss/Downloads/jboss-as-7.1.1.Final/jboss-as-7.1.1.Final</property>
+      <property name="jbossHome">$JBOSS_HOME</property>
     </configuration>
   </container>
 </arquillian>
