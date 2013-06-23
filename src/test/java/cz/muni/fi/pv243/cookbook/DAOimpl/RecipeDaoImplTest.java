@@ -1,9 +1,12 @@
 package cz.muni.fi.pv243.cookbook.DAOimpl;
 
+import cz.muni.fi.pv243.cookbook.DAO.IngredientDao;
 import cz.muni.fi.pv243.cookbook.DAO.RecipeDao;
+import cz.muni.fi.pv243.cookbook.DAO.UserDao;
 import cz.muni.fi.pv243.cookbook.categories.FoodCategory;
 import cz.muni.fi.pv243.cookbook.model.Recipe;
 import cz.muni.fi.pv243.cookbook.model.User;
+import cz.muni.fi.pv243.cookbook.util.ShaEncoder;
 import javax.inject.Inject;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -21,14 +24,16 @@ public class RecipeDaoImplTest
 {
    @Inject
    private RecipeDao recipeDao;
-   
+     
+   @Inject
+   private UserDao userDao;
    
    @Deployment
    public static Archive<?> createTestArchive()
    {
       return ShrinkWrap.create(WebArchive.class, "test.war")
             .addClass(FoodCategory.class)
-            .addPackages(true, RecipeDaoImpl.class.getPackage(), Recipe.class.getPackage(), RecipeDao.class.getPackage())
+            .addPackages(true, RecipeDaoImpl.class.getPackage(), Recipe.class.getPackage(), RecipeDao.class.getPackage(), ShaEncoder.class.getPackage())
             .addAsResource("META-INF/test-persistence.xml", "META-INF/persistence.xml")
             .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
             .addAsWebInfResource("test-ds.xml");
@@ -59,8 +64,10 @@ public class RecipeDaoImplTest
 //        recipe.setStars(0);
 //        recipe.setTime(1);
             User filip = new User("filip", "kiss", "filip", "filip@gmail.com", "filip", true);
+            userDao.createUser(filip);
+                        
             Recipe recipe = new Recipe("halusky", "nastruhaj zemiaky atd... ", filip, FoodCategory.OTHER, 4, 0, 213, 100, "velmi jednoduche halusky starej matere");
-
+                        
             assertNull(recipeDao.findRecipeByName(recipe.getName()));
 
        try {
@@ -76,10 +83,12 @@ public class RecipeDaoImplTest
    @Test
    public void editRecipeTest(){
        User tomas = new User("tomas", "plevko", "tom", "tomas@gmail.com", "tom", true);
-       Recipe recipe = new Recipe("halusky", "nastruhaj zemiaky atd... ", tomas, FoodCategory.OTHER, 4, 0, 213, 100, "velmi jednoduche halusky starej matere");
+       userDao.createUser(tomas);
+
+       Recipe recipe = new Recipe("halusky2", "nastruhaj zemiaky atd... ", tomas, FoodCategory.OTHER, 4, 0, 213, 100, "velmi jednoduche halusky starej matere");
        recipeDao.createRecipe(recipe);
        
-       assertEquals(recipe.getName(), "halusky");
+       assertEquals(recipe.getName(), "halusky2");
       
        recipe.setName("halusky so slaninou");
        
@@ -95,11 +104,13 @@ public class RecipeDaoImplTest
    
    @Test
    public void deleteRecipeTest(){
-       User tomas = new User("tomas", "plevko", "tom", "tomas@gmail.com", "tom", true);
-       Recipe recipe = new Recipe("halusky", "nastruhaj zemiaky atd... ", tomas, FoodCategory.OTHER, 4, 0, 213, 100, "velmi jednoduche halusky starej matere");
+       User tomas = new User("tomas2", "plevko2", "tom2", "tomas2@gmail.com", "tom2", true);
+       userDao.createUser(tomas);
+       
+       Recipe recipe = new Recipe("halusky3", "nastruhaj zemiaky atd... ", tomas, FoodCategory.OTHER, 4, 0, 213, 100, "velmi jednoduche halusky starej matere");
        recipeDao.createRecipe(recipe);
        
-       assertNotNull(recipeDao.findRecipeByName(recipe.getName()));
+       assertNotNull(recipeDao.findRecipeById(recipe.getId()));
        
        try {
             recipeDao.removeRecipe(recipe);
@@ -107,7 +118,7 @@ public class RecipeDaoImplTest
            fail();
        }
        
-       assertNull(recipeDao.findRecipeByName(recipe.getName()));
+       assertNull(recipeDao.findRecipeById(recipe.getId()));
        
    }
            
