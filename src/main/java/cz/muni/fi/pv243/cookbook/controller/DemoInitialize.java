@@ -46,7 +46,7 @@ public class DemoInitialize {
 		userDao.createUser(new User("admin", "admin", "admin",
 				"admin@admin.admin", "admin", true));
 
-		User tomas = userDao.findUserByNick("tom");
+		User tomas = userDao.findUserByNick("admin");
 		User roman = userDao.findUserByNick("roman");
 
 		recipeDao
