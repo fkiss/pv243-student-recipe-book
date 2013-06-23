@@ -43,8 +43,8 @@ public class DemoInitialize {
 				"tuharsky@gmail.com", "marek", false));
 		userDao.createUser(new User("roman", "romanovic", "roman",
 				"roman@gmail.com", "roman", false));
-		userDao.createUser(new User("tomas", "plevko", "tom",
-				"tomas@gmail.com", "tom", true));
+		userDao.createUser(new User("admin", "admin", "admin",
+				"admin@admin.admin", "admin", true));
 
 		User tomas = userDao.findUserByNick("tom");
 		User roman = userDao.findUserByNick("roman");
