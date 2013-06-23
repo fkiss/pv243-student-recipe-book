@@ -1,5 +1,9 @@
 package cz.muni.fi.pv243.cookbook.controller;
 
+import java.io.Serializable;
+
+import javax.enterprise.context.Conversation;
+import javax.enterprise.context.ConversationScoped;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Produces;
 import javax.faces.application.FacesMessage;
@@ -7,53 +11,77 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.jboss.seam.security.Identity;
+
 import cz.muni.fi.pv243.cookbook.DAO.UserDao;
+import cz.muni.fi.pv243.cookbook.login.Login;
 import cz.muni.fi.pv243.cookbook.model.User;
 
 @Named
-@RequestScoped
-public class CreateUserController {
+@ConversationScoped
+public class CreateUserController implements Serializable{
+
+	private static final long serialVersionUID = 7642386483268721L;
 
 	@Inject
 	private FacesContext facesContext;
 	
 	@Inject
-	private UserDao userDAO;
+	private UserDao userDao;
+
+	@Inject
+	Conversation conversation;
 	
-	@Named
 	@Produces
-	@RequestScoped
-	private User newUser = new User();
+	private User user = new User();
+	
+	@Inject
+	private Identity identity;
+
+	public void retrieve() {
+
+		if (conversation.isTransient()) {
+			conversation.begin();
+		}
+
+		user = userDao.findUserByID(Long.parseLong(identity.getUser().getId()));
+	}
+
+	public User getUser() {
+		return user;
+	}
 	
 	public void create() {
         try {
-            userDAO.createUser(newUser);
+            userDao.createUser(user);
             String message = "account successfully created";
             facesContext.addMessage(null, new FacesMessage(message));
         } catch (Exception e) {
-            String errorMessage = getRootErrorMessage(e);
-            FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, errorMessage, "Registration unsuccessful");
+        	
+            FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getLocalizedMessage(), "Registration unsuccessful");
             facesContext.addMessage(null, m);
         }
     }
 
-    private String getRootErrorMessage(Exception e) {
-        // Default to general error message that registration failed.
-        String errorMessage = "Registration failed. See server log for more information";
-        if (e == null) {
-            // This shouldn't happen, but return the default messages
-            return errorMessage;
-        }
+	public void update() {
 
-        // Start with the exception and recurse to find the root cause
-        Throwable t = e;
-        while (t != null) {
-            // Get the message from the Throwable class instance
-            errorMessage = t.getLocalizedMessage();
-            t = t.getCause();
-        }
-        // This is the root cause message
-        return errorMessage;
-    }
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+
+		try {
+
+			userDao.editUser(user);
+			String message = "account successfully updated";
+			facesContext.addMessage(null, new FacesMessage(message));
+
+			conversation.end();
+
+		} catch (Exception e) {
+			FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					e.getLocalizedMessage(), "Update unsuccessful");
+			facesContext.addMessage(null, m);
+			conversation.end();
+		}
+	}
+
 
 }

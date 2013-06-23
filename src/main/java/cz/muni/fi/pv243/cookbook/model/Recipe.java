@@ -15,6 +15,7 @@ import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * Entity implementation class for Entity: Recipe
@@ -34,6 +35,7 @@ public class Recipe implements Serializable {
 	private String name;
 
 	@NotNull
+	@Size(max = 2000)
 	private String description;
 
 	@NotNull

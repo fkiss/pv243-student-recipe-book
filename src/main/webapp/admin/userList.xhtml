@@ -6,12 +6,10 @@
 
 <ui:composition template="/resources/template.xhtml">
 
-	<ui:define name="sidebar">
-	</ui:define>
-
 	<ui:define name="content">
-		<h:dataTable value="#{allUsers}" var="_user"
-			rendered="#{not empty allUsers}">
+
+		<h:dataTable value="#{adminOperationsController.allUsers}" var="_user"
+			rendered="#{not empty adminOperationsController.allUsers}">
 			<h:column>
 				<f:facet name="header">Id</f:facet>
                 #{_user.id}
@@ -32,8 +30,15 @@
 				<f:facet name="header">e-mail</f:facet>
                 #{_user.email}
             </h:column>
+
+			<h:column>
+				<h:commandButton value="Delete"
+					action="#{adminOperationsController.deleteUser(_user.id)}" />
+			</h:column>
 		</h:dataTable>
+
 	</ui:define>
+
 </ui:composition>
 
 </html>

@@ -27,16 +27,18 @@
 			<div id="menu">
 				<ul>
 					<li class="active"><h:link outcome="/index" value="Home" /></li>
-					<li><h:link outcome="/recipe/insertRecipe"
-							value="New recipe" rendered="#{login.loggedIn}" /></li>
-					<li><h:link outcome="/user/registrate" value="Registrate"
-							rendered="#{!login.loggedIn}" /></li>
-					<li><h:link outcome="/recipe/userRecipes"
-							value="my recipes" rendered="#{login.loggedIn}" /></li>
-					<li><h:link outcome="/user/editUser"
-							value="account" rendered="#{login.loggedIn}" /></li>
-					<li><h:link outcome="/user/userLogin" value="Login" rendered="#{!login.loggedIn}"/></li>
-                                                                                                    <li><h:link outcome="/user/userLogin" value="Log Out" rendered="#{login.loggedIn}"/></li>
+					<li><h:link outcome="/user/insertRecipe" value="New recipe"
+							rendered="#{identity.loggedIn}" /></li>
+					<li><h:link outcome="/registrate" value="Registrate"
+							rendered="#{!identity.loggedIn}" /></li>
+					<li><h:link outcome="/user/userRecipes" value="my recipes"
+							rendered="#{identity.loggedIn}" /></li>
+					<li><h:link outcome="/user/editUser" value="account"
+							rendered="#{identity.loggedIn}" /></li>
+					<li><h:link outcome="/userLogin" value="Login"
+							rendered="#{!identity.loggedIn}" /></li>
+					<li><h:link outcome="/userLogin" value="Log Out"
+							rendered="#{identity.loggedIn}" /></li>
 				</ul>
 			</div>
 		</div>
@@ -64,7 +66,6 @@
 
 		<br style="clear: both" />
 	</div>
-
 
 	<footer>
 	<div id="footer-wrapper">

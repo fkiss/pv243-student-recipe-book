@@ -1,11 +1,113 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"> 
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 
-	<ui:composition template="/resources/template.xhtml">
-	
-	</ui:composition>
+<f:metadata>
+	<f:viewParam name="id" value="#{viewRecipeController.id}" />
+	<f:event type="preRenderView"
+		listener="#{viewRecipeController.retrieve()}" />
+</f:metadata>
+
+<ui:composition template="/resources/template.xhtml">
+
+	<ui:define name="content">
+
+		<h1>
+			<h:outputText id="reciepName"
+				value="#{viewRecipeController.recipe.name}" />
+		</h1>
+
+		<br />
+		<br />
+
+		<h2>Ingredients</h2>
+		<br />
+		<h:dataTable var="_ingredient"
+			value="#{viewRecipeController.recipe.ingredientList}">
+			<h:column>
+				<f:facet name="header">quantity</f:facet>
+				<h:outputText value="#{_ingredient.quantity}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">name</f:facet>
+				<h:outputText value="#{_ingredient.name}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">description</f:facet>
+				<h:outputText value="#{_ingredient.description}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">obligatory</f:facet>
+				<h:outputText value="#{_ingredient.obligatory}" />
+			</h:column>
+		</h:dataTable>
+
+		<br />
+		<br />
+		<br />
+
+		<h2>Description:</h2>
+		<br />
+		<h:panelGrid>
+
+			<h:outputText id="recipeDesc"
+				value="#{viewRecipeController.recipe.oneSentenceDescription}" />
+			<h:outputText />
+			<h:outputText id="recipePortions"
+				value="#{viewRecipeController.recipe.portions} portions" />
+			<h:outputText />
+			<h:outputText id="recipeTime"
+				value="Time to prepair: #{viewRecipeController.recipe.time} min." />
+			<h:outputText />
+			<h:outputText id="recipePrice"
+				value="Price of the recipe: #{viewRecipeController.recipe.price} Kč" />
+			<h:outputText />
+			<h:outputText id="recipeStars"
+				value="#{viewRecipeController.recipe.stars} stars" />
+			<h:outputText />
+
+		</h:panelGrid>
+		<br />
+		<br />
+
+		<h2>Preparation:</h2>
+		<br />
+
+		<h:panelGrid>
+			<h:outputText />
+			<h:outputText id="recipePreparation"
+				value="#{viewRecipeController.recipe.description}" />
+			<h:outputText />
+
+		</h:panelGrid>
+
+		<br />
+		<br />
+
+		<h:form>
+		
+		//TODO : Rate the recipe: 
+		
+		</h:form>
+
+		<br />
+		<br />
+		<p>
+			Created by :
+			<h:link outcome="/user/user">
+				<f:param name="id" value="#{viewRecipeController.recipe.owner.id}" />
+				<h:outputText id="itemName"
+					value="#{viewRecipeController.recipe.owner.nick}" />
+			</h:link>
+		</p>
+
+
+
+	</ui:define>
+</ui:composition>
 
 </html>

@@ -1,19 +1,53 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:composite="http://java.sun.com/jsf/composite"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
-<head>
-<title>Not present in rendered output</title>
-</head>
-<body>
-<composite:interface>
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 
-</composite:interface>
-<composite:implementation>
+<ui:composition template="/resources/template.xhtml">
 
-</composite:implementation>
-</body>
+	<ui:define name="content">
+
+		<h:dataTable value="#{adminOperationsController.allRecipes}"
+			var="_recipe"
+			rendered="#{not empty adminOperationsController.allRecipes}">
+			<h:column>
+				<f:facet name="header">id</f:facet>
+                #{_recipe.id}
+            </h:column>
+			<h:column>
+				<f:facet name="header">name</f:facet>
+                #{_recipe.name}
+            </h:column>
+			<h:column>
+				<f:facet name="header">stars</f:facet>
+                #{_recipe.stars}
+            </h:column>
+			<h:column>
+				<f:facet name="header">time</f:facet>
+                #{_recipe.time}
+            </h:column>
+			<h:column>
+				<f:facet name="header">category</f:facet>
+                #{_recipe.foodCategory.label}
+            </h:column>
+			<h:column>
+				<f:facet name="header">created</f:facet>
+                #{_recipe.date}
+            </h:column>
+			<h:column>
+				<f:facet name="header">owner</f:facet>
+                #{_recipe.owner.nick}
+            </h:column>
+			<h:column>
+				<f:facet name="header">Remove ingredient</f:facet>
+
+				<h:commandButton value="Delete"
+					action="#{adminOperationsController.deleteRecipe(_recipe)}" />
+			</h:column>
+		</h:dataTable>
+	</ui:define>
+</ui:composition>
 </html>

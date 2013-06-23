@@ -4,9 +4,6 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
-<h:head></h:head>
-<body>
-
 	<ui:composition template="/resources/template.xhtml">
 
 		<ui:define name="content">
@@ -14,23 +11,23 @@
 			<h:form id="registrateUse">
 				<h:panelGrid columns="3">
 					<h:outputLabel for="nick">Enter nick:</h:outputLabel>
-					<h:inputText id="nick" value="#{newUser.nick}" />
+					<h:inputText id="nick" value="#{createUserController.user.nick}" />
 					<h:message for="nick" />
 
 					<h:outputLabel for="firstName">Enter first name:</h:outputLabel>
-					<h:inputText id="firstName" value="#{newUser.firstName}" />
+					<h:inputText id="firstName" value="#{createUserController.user.firstName}" />
 					<h:message for="firstName" />
 
 					<h:outputLabel for="surname">Enter surname:</h:outputLabel>
-					<h:inputText id="surname" value="#{newUser.surname}" />
+					<h:inputText id="surname" value="#{createUserController.user.surname}" />
 					<h:message for="surname" />
 
 					<h:outputLabel for="email">Enter email:</h:outputLabel>
-					<h:inputText id="email" value="#{newUser.email}" />
+					<h:inputText id="email" value="#{createUserController.user.email}" />
 					<h:message for="email" />
 
 					<h:outputLabel for="password">Enter password:</h:outputLabel>
-					<h:inputSecret id="password" value="#{newUser.password}">
+					<h:inputSecret id="password" value="#{createUserController.user.password}">
 						<f:validator validatorId="passwordValidator" />
 						<f:attribute name="confirmPassword" value="#{confirmPassword}" />
 					</h:inputSecret>
@@ -47,8 +44,8 @@
 				<h:messages styleClass="messages" errorClass="invalid"
 					infoClass="valid" warnClass="warning" globalOnly="true" />
 			</h:form>
+			
 		</ui:define>
 
 	</ui:composition>
-</body>
 </html>

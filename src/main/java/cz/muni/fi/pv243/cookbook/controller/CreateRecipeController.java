@@ -12,43 +12,77 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.jboss.seam.security.Identity;
 
 import cz.muni.fi.pv243.cookbook.DAO.IngredientDao;
 import cz.muni.fi.pv243.cookbook.DAO.RecipeDao;
+import cz.muni.fi.pv243.cookbook.DAO.UserDao;
 import cz.muni.fi.pv243.cookbook.login.Login;
 import cz.muni.fi.pv243.cookbook.model.Ingredient;
 import cz.muni.fi.pv243.cookbook.model.Recipe;
+import cz.muni.fi.pv243.cookbook.model.User;
 
+/**
+ * class used for updating the information about the recipes of particular
+ * author
+ * 
+ * @author tomas plevko <xplevko@mail.muni.cz>
+ * 
+ */
 @Named
 @ConversationScoped
 public class CreateRecipeController implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Inject
 	private RecipeDao recipeDao;
-	
+
 	@Inject
 	private IngredientDao ingredientDao;
+	
+	@Inject
+	private UserDao userDao;
 
 	@Named
 	@Produces
 	private Ingredient inputIngredient = new Ingredient();
 
-	private List<Ingredient> ingredientList = new ArrayList<Ingredient>();
-
 	@Inject
 	private Conversation conversation;
 
 	@Inject
-	private Login login;
-	
-	private Recipe newRecipe = new Recipe();
+	private Identity identity;
+
+	private Recipe recipe = new Recipe();
+
+	private Long id;
+
+	public Long getId() {
+		return this.id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	/**
+	 * method for initialisation of the update process of the ingredient
+	 */
+	public void retrieve() {
+
+		if (conversation.isTransient()) {
+
+			conversation.begin();
+
+			recipe = recipeDao.findRecipeById(id);
+		}
+	}
 
 	@Named
 	@Produces
-	public Recipe getNewRecipe() {
-		return newRecipe;
+	public Recipe getRecipe() {
+		return recipe;
 	}
 
 	public void begin() {
@@ -57,92 +91,120 @@ public class CreateRecipeController implements Serializable {
 		}
 	}
 
-	//TODO : add cancel button into the page
+	// TODO : add cancel button into the page
 	public void cancel() {
-		
-		for(Ingredient i: ingredientList) {
-			ingredientDao.removeIngredient(i);
-		}
-		
+
 		conversation.end();
 	}
-	
+
 	public List<Ingredient> getIngredientList() {
-		return ingredientList;
+		return recipe.getIngredientList();
 	}
 
+	/**
+	 * Method for adding the ingredients into the recipe
+	 */
 	public void addIngredient() {
 
-        try {
-    		Ingredient newIngredient = new Ingredient();
-    		
-    		newIngredient.setName(inputIngredient.getName());
-    		newIngredient.setDescription(inputIngredient.getDescription());
-    		newIngredient.setObligatory(inputIngredient.getObligatory());
-    		newIngredient.setQuantity(inputIngredient.getQuantity());
+		try {
+			Ingredient newIngredient = new Ingredient();
 
-    		ingredientDao.createIngredient(newIngredient);
-    		
-    		ingredientList.add(newIngredient);
-        } catch (Exception e) {
-        	System.out.println(e);
-        	//TODO : pridat do logu...
-        }
+			newIngredient.setName(inputIngredient.getName());
+			newIngredient.setDescription(inputIngredient.getDescription());
+			newIngredient.setObligatory(inputIngredient.getObligatory());
+			newIngredient.setQuantity(inputIngredient.getQuantity());
+
+			recipe.getIngredientList().add(newIngredient);
+			
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 	}
 
+	/**
+	 * Method used for the removing of ingredients from the ingredient list of
+	 * the recipe
+	 * 
+	 * @param ingredientToRemove
+	 */
 	public void deleteIngredient(Ingredient ingredientToRemove) {
 
-		ingredientDao.removeIngredient(ingredientToRemove);
-		
-		ingredientList.remove(ingredientToRemove);
+		recipe.getIngredientList().remove(ingredientToRemove);
 	}
 	
+	/**
+	 * Method for creating new recipe
+	 */
+
 	public void createRecipe() {
 
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 
-		if (login.isLoggedIn()) {
+		try {
 
-			try {
-				
-				newRecipe.setOwner(login.getCurrentUser());
+			recipe.setOwner(userDao.findUserByID(Long.parseLong(identity.getUser().getId())));
 
-				newRecipe.setStars(0);
-				
-				newRecipe.setIngredientList(getIngredientList());
-				
-				recipeDao.createRecipe(newRecipe);
-				
-				String message = "recipe successfully created";
-				facesContext.addMessage(null, new FacesMessage(message));
-				
-				conversation.end();
-				
-			} catch (Exception e) {
-				String errorMessage = getRootErrorMessage(e);
-				FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-						errorMessage, "Recipe registration unsuccessful");
-				facesContext.addMessage(null, m);
-			}
+			recipe.setStars(0);
 
-		} else {
-			
-			facesContext.addMessage(null, new FacesMessage("please log in to insert recipe"));
+			recipeDao.createRecipe(recipe);
+
+			String message = "recipe successfully created";
+			facesContext.addMessage(null, new FacesMessage(message));
+
+			conversation.end();
+
+		} catch (Exception e) {
+			String errorMessage = getRootErrorMessage(e);
+			FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					errorMessage, "Recipe registration unsuccessful");
+			facesContext.addMessage(null, m);
+		}
+	}
+	
+
+	/**
+	 * Method used for updating of the recipe, the user updates in the jsf page
+	 */
+	public void update() {
+
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+
+		try {
+
+			recipeDao.editRecipe(recipe);
+			String message = "recipe successfully updated";
+			facesContext.addMessage(null, new FacesMessage(message));
+
+			conversation.end();
+
+		} catch (Exception e) {
+			String errorMessage = getRootErrorMessage(e);
+			FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					errorMessage, "Update unsuccessful");
+			facesContext.addMessage(null, m);
+			conversation.end();
 		}
 	}
 
+	/**
+	 * Method for deleting the recipe
+	 * 
+	 * @return userRecipes - the jsf page, containing the remaining recipes of
+	 *         the user
+	 */
+	public String delete() {
+
+		recipeDao.removeRecipe(recipe);
+		return "userRecipes";
+	}
+
 	private String getRootErrorMessage(Exception e) {
-		// Default to general error message that registration failed.
-		String errorMessage = "Recipe creation failed. See server log for more information";
+		String errorMessage = "Recipe creation or update failed. See server log for more information";
 		if (e == null) {
-			// This shouldn't happen, but return the default messages
 			return errorMessage;
 		}
-
-		// Start with the exception and recurse to find the root cause
 		Throwable t = e;
 		while (t != null) {
-			// Get the message from the Throwable class instance
 			errorMessage = t.getLocalizedMessage();
 			t = t.getCause();
 		}

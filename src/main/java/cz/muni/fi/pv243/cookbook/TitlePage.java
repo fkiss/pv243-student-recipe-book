@@ -42,8 +42,7 @@ class TitlePage {
 		}
 	};
 
-	//TODO : mozno pouzit iny timer... vraj je nejaky zabudovany priamo v EJB, tak kukni ten...
-	// 		http://docs.oracle.com/javaee/6/tutorial/doc/bnboy.html
+	//TODO : mozno pouzit iny timer (EJB)...
 	
 	@Named
 	@Produces

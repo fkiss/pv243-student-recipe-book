@@ -10,7 +10,7 @@
 	<f:viewParam name="label"
 		value="#{viewFoodCategoryController.foodCategory}" />
 	<f:event type="preRenderView"
-		listener="#{viewFoodCategoryController.retrieve()}" />
+		listener="#{viewFoodCategoryController.retrieveFoodCategories()}" />
 </f:metadata>
 
 <ui:composition template="/resources/template.xhtml">
@@ -26,7 +26,7 @@
 
 			<h:column>
 				<f:facet name="header">name</f:facet>
-				<h:link outcome="/recipe/recipe">
+				<h:link outcome="/recipe">
 					<f:param name="id" value="#{_recipe.id}" />
 					<h:outputText id="itemName" value="#{_recipe.name}" />
 				</h:link>

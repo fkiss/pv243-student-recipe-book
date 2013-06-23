@@ -1,71 +1,66 @@
 package cz.muni.fi.pv243.cookbook.login;
 
-import java.io.Serializable;
-
-import javax.ejb.Stateful;
-import javax.enterprise.context.SessionScoped;
-import javax.enterprise.inject.Produces;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
-import javax.inject.Named;
+import org.picketlink.idm.impl.api.PasswordCredential;
+
+import org.jboss.seam.security.BaseAuthenticator;
+import org.jboss.seam.security.Credentials;
 
 import cz.muni.fi.pv243.cookbook.DAO.UserDao;
 import cz.muni.fi.pv243.cookbook.model.User;
 import cz.muni.fi.pv243.cookbook.util.ShaEncoder;
 
-@Named
-@SessionScoped
-@Stateful
-public class Login implements Serializable {
-
-	private static final long serialVersionUID = 121398231123L;
+public class Login extends BaseAuthenticator {
 
 	@Inject
 	private Credentials credentials;
 
 	@Inject
 	private UserDao userDAO;
+	
+	@Override
+	public void authenticate() {
 
-	private User currentUser;
+		final User user = userDAO.findUserByNick(credentials.getUsername());
 
-	public void login() throws Exception {
+		String hash = ShaEncoder.hash(((PasswordCredential) credentials
+				.getCredential()).getValue());
 
-		User user = userDAO.findUserByNick(credentials.getNick());
+		if (user != null && user.getPassword().equals(hash)) {
 
-		String hash = ShaEncoder.hash(credentials.getPassword());
-		
-		if (user != null
-				&& user.getPassword().equals(hash)) {
-			this.currentUser = user;
+			UserRole role = UserRole.USER;
+			
+			if(user.isAdmin() == true) {
+				role = UserRole.ADMIN;
+			}
+			
+			final UserRole userRole = role;
+			
+			setUser(new org.picketlink.idm.api.User() {
+				@Override
+				public String getId() {
+					return Long.toString(user.getId());
+				}
+				@Override
+				public String getKey() {
+					return userRole.toString();
+				}
+			});
+
+			setStatus(AuthenticationStatus.SUCCESS);
 
 			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage("Welcome, " + currentUser.getNick()));
+					new FacesMessage("Welcome, " + user.getNick()));
+
 		} else {
+			setStatus(AuthenticationStatus.FAILURE);
 
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage("Loggin not sucessfull"));
+
+			return;
 		}
 	}
-
-	public void logout() {
-
-		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage("Goodbye, " + currentUser.getNick()));
-		currentUser = null;
-	}
-
-	@Produces
-	public boolean isLoggedIn() {
-
-		return currentUser != null;
-	}
-
-	// TODO : LoggedIn - asi to bude treba prerobit...
-	public User getCurrentUser() {
-
-		return currentUser;
-
-	}
-
 }

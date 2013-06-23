@@ -4,20 +4,16 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
-<h:head></h:head>
-<body>
-
 	<ui:composition template="/resources/template.xhtml">
 
 		<ui:define name="content">
 
 			<h:dataTable value="#{allSpecificUserRecipes}" var="_recipe"
 				rendered="#{not empty allSpecificUserRecipes}">
-
 				<h:column>
 					<f:facet name="header">name</f:facet>
-					<h:outputText id="itemName" value="#{_recipe.name}" />
-				</h:column>
+                #{_recipe.name}
+            </h:column>
 				<h:column>
 					<f:facet name="header">stars</f:facet>
                 #{_recipe.stars}
@@ -36,7 +32,7 @@
             </h:column>
 				<h:column>
 
-					<h:link outcome="/recipe/editRecipe">
+					<h:link outcome="/user/editRecipe">
 						<f:param name="id" value="#{_recipe.id}" />
 
 						<h:commandButton value="edit recipe" />
@@ -45,6 +41,4 @@
 			</h:dataTable>
 		</ui:define>
 	</ui:composition>
-
-</body>
 </html>

@@ -38,8 +38,9 @@ public class ViewFoodCategoryController {
 		this.foodCategory = foodCategory;
 	}
 
+	// supress warning recipeList = (List<Recipe>) query.getResultList(), query creates warnings
 	@SuppressWarnings("unchecked")
-	public void retrieve() {
+	public void retrieveFoodCategories() {
 		
 		foodCategory = foodCategory.toUpperCase();
 		

@@ -11,7 +11,6 @@ import javax.inject.Named;
 
 import cz.muni.fi.pv243.cookbook.DAO.RecipeDao;
 import cz.muni.fi.pv243.cookbook.DAO.UserDao;
-import cz.muni.fi.pv243.cookbook.controller.GetAllUsersController;
 import cz.muni.fi.pv243.cookbook.model.Ingredient;
 import cz.muni.fi.pv243.cookbook.model.Recipe;
 import cz.muni.fi.pv243.cookbook.model.User;
@@ -33,8 +32,6 @@ public class RecipeFinder {
                     private IngredientDao ingredientDao;
                     
                     @Inject UserDao userDao;
-        
-                    private GetAllUsersController getAllUsersController;
                             
 	public RecipeFinder() {
 	}

@@ -1,5 +1,8 @@
 package cz.muni.fi.pv243.cookbook.DAOimpl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -126,5 +129,17 @@ public class UserDaoImpl implements UserDao {
 		manager.merge(u);
 //                                        userLogger.edited(user.getFirstName(), user.getSurname());
 
+	}
+
+	@Override
+	public List<User> retreiveAllUsers() {
+
+		List<User> userList = new ArrayList<User>();
+		
+		Query query = manager.createQuery("select user from User user order by user.id", User.class);
+		
+		userList = (List<User>) query.getResultList();
+		
+		return userList;
 	}
 }

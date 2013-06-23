@@ -91,38 +91,38 @@
 		<h:form>
 			<h:panelGrid columns="3">
 				<h:outputLabel for="name">Enter recipe name:</h:outputLabel>
-				<h:inputText id="name" value="#{newRecipe.name}" />
+				<h:inputText id="name" value="#{recipe.name}" />
 				<h:message for="name" />
 
 				<h:outputLabel for="description">Enter description:</h:outputLabel>
-				<h:inputTextarea id="description" value="#{newRecipe.description}"
+				<h:inputTextarea id="description" value="#{recipe.description}"
 					cols="30" rows="10" />
 				<h:message for="description" />
 
 				<h:outputLabel for="oneSentenceDescription">One sentence description:</h:outputLabel>
 				<h:inputTextarea id="oneSentenceDescription"
-					value="#{newRecipe.oneSentenceDescription}" cols="30" rows="5" />
+					value="#{recipe.oneSentenceDescription}" cols="30" rows="5" />
 				<h:message for="oneSentenceDescription" />
 
 				<h:outputLabel for="time">Enter time to cook (in min.):</h:outputLabel>
-				<h:inputText id="time" value="#{newRecipe.time}">
+				<h:inputText id="time" value="#{recipe.time}">
 					<f:validateLongRange minimum="0" />
 				</h:inputText>
 				<h:message for="time" />
 
 				<h:outputLabel for="portions">Enter number of portions:</h:outputLabel>
-				<h:inputText id="portions" value="#{newRecipe.portions}">
+				<h:inputText id="portions" value="#{recipe.portions}">
 					<f:validateLongRange minimum="0" />
 				</h:inputText>
 				<h:message for="portions" />
 				 
 				<h:outputLabel for="price">Enter approximate price of the recipe (Kč):</h:outputLabel>
-				<h:inputText id="price" value="#{newRecipe.price}">
+				<h:inputText id="price" value="#{recipe.price}">
 					<f:validateLongRange minimum="0" />
 				</h:inputText>
 				<h:message for="portions" />
 
-				<h:selectOneMenu id="foodCategory" value="#{newRecipe.foodCategory}">
+				<h:selectOneMenu id="foodCategory" value="#{recipe.foodCategory}">
 					<f:selectItems value="#{foodCategoryBean.foodCategoryValues}"
 						var="foodCategory" itemLabel="#{foodCategory.label}" />
 				</h:selectOneMenu>

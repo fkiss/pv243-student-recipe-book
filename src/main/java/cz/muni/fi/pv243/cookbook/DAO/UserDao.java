@@ -1,5 +1,7 @@
 package cz.muni.fi.pv243.cookbook.DAO;
 
+import java.util.List;
+
 import cz.muni.fi.pv243.cookbook.model.User;
 
 public interface UserDao {
@@ -15,4 +17,6 @@ public interface UserDao {
     public User findUserByNick(String nick);
     
     public User findUserByEmail(String email);
+
+    public List<User> retreiveAllUsers();
 }

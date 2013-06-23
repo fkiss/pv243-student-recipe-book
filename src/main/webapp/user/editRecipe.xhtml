@@ -7,9 +7,9 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <f:metadata>
-	<f:viewParam name="id" value="#{updateRecipeController.id}" />
+	<f:viewParam name="id" value="#{createRecipeController.id}" />
 	<f:event type="preRenderView"
-		listener="#{updateRecipeController.retrieve()}" />
+		listener="#{createRecipeController.retrieve()}" />
 </f:metadata>
 
 <ui:composition template="/resources/template.xhtml">
@@ -26,9 +26,9 @@
 			<h3>Update Ingredients</h3>
 			<br />
 
-			<h:dataTable value="#{updateRecipeController.ingredientList}"
+			<h:dataTable value="#{createRecipeController.ingredientList}"
 				var="_ingredient"
-				rendered="#{not empty updateRecipeController.ingredientList}">
+				rendered="#{not empty createRecipeController.ingredientList}">
 				<h:column>
 					<f:facet name="header">ID</f:facet>
                 #{_ingredient.id}
@@ -53,32 +53,32 @@
 					<f:facet name="header">Remove ingredient</f:facet>
 
 					<h:commandLink value="Delete"
-						action="#{updateRecipeController.deleteIngredient(_ingredient)}" />
+						action="#{createRecipeController.deleteIngredient(_ingredient)}" />
 				</h:column>
 			</h:dataTable>
 
 			<h:form id="insertNewIngredient">
 				<h:panelGrid columns="3">
 					<h:outputLabel for="name">Name:</h:outputLabel>
-					<h:inputText id="name" value="#{editIngredient.name}" />
+					<h:inputText id="name" value="#{inputIngredient.name}" />
 					<h:message for="name" />
 
 					<h:outputLabel for="description">Description:</h:outputLabel>
-					<h:inputText id="description" value="#{editIngredient.description}" />
+					<h:inputText id="description" value="#{inputIngredient.description}" />
 					<h:message for="description" />
 
 					<h:outputLabel for="quantity">Quantity:</h:outputLabel>
-					<h:inputText id="quantity" value="#{editIngredient.quantity}" />
+					<h:inputText id="quantity" value="#{inputIngredient.quantity}" />
 					<h:message for="quantity" />
 
 					<h:outputLabel for="obligatory">Obligatory:</h:outputLabel>
 					<h:selectBooleanCheckbox id="obligatory"
-						value="#{editIngredient.obligatory}" />
+						value="#{inputIngredient.obligatory}" />
 					<h:message for="obligatory" />
 				</h:panelGrid>
 
 				<h:commandButton value="Add"
-					action="#{updateRecipeController.addIngredient()}" />
+					action="#{createRecipeController.addIngredient()}" />
 			</h:form>
 		</h:form>
 
@@ -92,53 +92,53 @@
 		<h:form>
 			<h:panelGrid columns="3">
 				<h:outputLabel for="name">Edit recipe name:</h:outputLabel>
-				<h:inputText id="name" value="#{updateRecipeController.recipe.name}" />
+				<h:inputText id="name" value="#{createRecipeController.recipe.name}" />
 				<h:message for="name" />
 
 				<h:outputLabel for="description">Edit description:</h:outputLabel>
 				<h:inputTextarea id="description"
-					value="#{updateRecipeController.recipe.description}" cols="30"
+					value="#{createRecipeController.recipe.description}" cols="30"
 					rows="10" />
 				<h:message for="description" />
 
 				<h:outputLabel for="oneSentenceDescription">Edit one sentence description:</h:outputLabel>
 				<h:inputTextarea id="oneSentenceDescription"
-					value="#{updateRecipeController.recipe.oneSentenceDescription}"
+					value="#{createRecipeController.recipe.oneSentenceDescription}"
 					cols="30" rows="5" />
 				<h:message for="oneSentenceDescription" />
 
 				<h:outputLabel for="time">Edit time to cook (in min.):</h:outputLabel>
-				<h:inputText id="time" value="#{updateRecipeController.recipe.time}">
+				<h:inputText id="time" value="#{createRecipeController.recipe.time}">
 					<f:validateLongRange minimum="0" />
 				</h:inputText>
 				<h:message for="time" />
 
 				<h:outputLabel for="portions">Edit number of portions:</h:outputLabel>
 				<h:inputText id="portions"
-					value="#{updateRecipeController.recipe.portions}">
+					value="#{createRecipeController.recipe.portions}">
 					<f:validateLongRange minimum="0" />
 				</h:inputText>
 				<h:message for="portions" />
 
 				<h:outputLabel for="price">Edit recipe price:</h:outputLabel>
 				<h:inputText id="price"
-					value="#{updateRecipeController.recipe.price}">
+					value="#{createRecipeController.recipe.price}">
 					<f:validateLongRange minimum="0" />
 				</h:inputText>
 				<h:message for="portions" />
 
 				<h:selectOneMenu id="foodCategory"
-					value="#{updateRecipeController.recipe.foodCategory}">
+					value="#{createRecipeController.recipe.foodCategory}">
 					<f:selectItems value="#{foodCategoryBean.foodCategoryValues}"
 						var="foodCategory" itemLabel="#{foodCategory.label}" />
 				</h:selectOneMenu>
 				<h:message for="foodCategory" />
 			</h:panelGrid>
-			<h:commandButton action="#{updateRecipeController.update()}"
+			<h:commandButton action="#{createRecipeController.update()}"
 				value="update" />
 			<h:messages styleClass="messages" errorClass="invalid"
 				infoClass="valid" warnClass="warning" globalOnly="true" />
-			<h:commandButton value="Delete" action="#{updateRecipeController.delete()}" />
+			<h:commandButton value="Delete" action="#{createRecipeController.delete()}" />
 		</h:form>
 
 	</ui:define>

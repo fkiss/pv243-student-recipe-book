@@ -14,7 +14,7 @@
 
 			<h:column>
 				<f:facet name="header">name</f:facet>
-				<h:link outcome="/recipe/recipe">
+				<h:link outcome="/recipe">
 					<f:param name="id" value="#{_recipe.id}" />
 					<h:outputText id="itemName" value="#{_recipe.name}" />
 				</h:link>
@@ -43,8 +43,9 @@
 
 		<h:panelGrid columns="6">
 			<h:panelGroup>
-				<ui:repeat var="_category" value="#{foodCategoryBean.foodCategoryValues}">
-					<h:link outcome="/recipe/foodCategory">
+				<ui:repeat var="_category"
+					value="#{foodCategoryBean.foodCategoryValues}">
+					<h:link outcome="/foodCategory">
 						<f:param name="label" value="#{_category.label}" />
 						<h:outputText value="#{_category.label}" />
 					</h:link>
@@ -68,14 +69,15 @@
 			<br />
 
 			<h:messages />
-                                                            
-                                                            <h:outputText value="No recipes found :/" rendered="#{empty RecipeFinder.foundRecipes}" />
-			<h:dataTable value="#{RecipeFinder.foundRecipes}"
-				var="_recipe" rendered="#{not empty RecipeFinder.foundRecipes}">
+
+			<h:outputText value="No recipes found :/"
+				rendered="#{empty RecipeFinder.foundRecipes}" />
+			<h:dataTable value="#{RecipeFinder.foundRecipes}" var="_recipe"
+				rendered="#{not empty RecipeFinder.foundRecipes}">
 
 				<h:column>
 					<f:facet name="header">name</f:facet>
-					<h:link outcome="/recipe/recipe">
+					<h:link outcome="/recipe">
 						<f:param name="id" value="#{_recipe.id}" />
 						<h:outputText id="itemName" value="#{_recipe.name}" />
 					</h:link>

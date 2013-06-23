@@ -8,7 +8,7 @@
 
 <f:metadata>
 	<f:event type="preRenderView"
-		listener="#{updateUserController.retrieve()}" />
+		listener="#{createUserController.retrieve()}" />
 </f:metadata>
 
 <ui:composition template="/resources/template.xhtml">
@@ -20,21 +20,21 @@
 		
 		<h:panelGrid columns="3">
 			<h:outputLabel for="nick">nick:</h:outputLabel>
-			<h:outputLabel id="nick" value="#{updateUserController.user.nick}" />
+			<h:outputLabel id="nick" value="#{createUserController.user.nick}" />
 			<h:message for="nick" />
 
 			<h:outputLabel for="firstName">first name:</h:outputLabel>
 			<h:outputLabel id="firstName"
-				value="#{updateUserController.user.firstName}" />
+				value="#{createUserController.user.firstName}" />
 			<h:message for="firstName" />
 
 			<h:outputLabel for="surname">surname:</h:outputLabel>
 			<h:outputLabel id="surname"
-				value="#{updateUserController.user.surname}" />
+				value="#{createUserController.user.surname}" />
 			<h:message for="surname" />
 
 			<h:outputLabel for="email">email:</h:outputLabel>
-			<h:outputLabel id="email" value="#{updateUserController.user.email}" />
+			<h:outputLabel id="email" value="#{createUserController.user.email}" />
 			<h:message for="email" />
 		</h:panelGrid>
 		
@@ -48,7 +48,7 @@
 			<h:panelGrid columns="3">
 				<h:outputLabel for="newPassword">Enter new password:</h:outputLabel>
 				<h:inputSecret id="newPassword"
-					value="#{updateUserController.user.password}">
+					value="#{createUserController.user.password}">
 					<f:validator validatorId="passwordValidator" />
 					<f:attribute name="confirmPassword" value="#{confirmPassword}" />
 				</h:inputSecret>
@@ -60,7 +60,7 @@
 				<h:message for="confirmNewPassword" />
 
 			</h:panelGrid>
-			<h:commandButton action="#{updateUserController.update()}"
+			<h:commandButton action="#{createUserController.update()}"
 				id="update" value="update" />
 			<h:messages styleClass="messages" errorClass="invalid"
 				infoClass="valid" warnClass="warning" globalOnly="true" />
