@@ -25,7 +25,7 @@ import java.util.Map.Entry;
 @RequestScoped
 public class RecipeFinder {
 
-	@Inject
+		@Inject
 	private RecipeDao recipeDao;
         
                     @Inject

@@ -60,18 +60,25 @@
 		<h3>Recipe search bar</h3>
 
 		<h:form>
-			<h:inputText id="search" value="#{attributes}"
+			<<h:inputText id="search" value="#{attributes}"
 				style=" width : 580px;" required="true"></h:inputText>
-			<h:commandButton value="Find!">
+			<h:commandButton value="Find!" action="#{recipeFinder.searchEverywhere(attributes)}">
 			</h:commandButton>
 
 			<br />
 			<br />
 
 			<h:messages />
+                                                            
+                                                            <h:outputText value="No recipes found :/" rendered="#{empty recipeFinder.foundRecipes}" />
+                                                                                <h:dataTable value="#{recipeFinder.foundRecipes}"
+				var="_recipe" rendered="#{not empty recipeFinder.foundRecipes}">
 
-			<h:dataTable value="#{recipeFinder.findEverything(attributes)}"
-				var="_recipe" rendered="#{not empty attributes}">
+
+			<h:outputText value="No recipes found :/"
+				rendered="#{empty RecipeFinder.foundRecipes}" />
+			<h:dataTable value="#{RecipeFinder.foundRecipes}" var="_recipe"
+				rendered="#{not empty RecipeFinder.foundRecipes}">
 
 				<h:column>
 					<f:facet name="header">name</f:facet>
