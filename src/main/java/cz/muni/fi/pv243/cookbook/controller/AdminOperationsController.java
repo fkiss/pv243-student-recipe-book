@@ -18,9 +18,7 @@ import cz.muni.fi.pv243.cookbook.model.User;
 
 @RequestScoped
 @Named
-public class AdminOperationsController implements Serializable {
-
-	private static final long serialVersionUID = 32423513432423425L;
+public class AdminOperationsController {
 
 	@Inject
 	UserDao userDao;

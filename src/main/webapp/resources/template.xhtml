@@ -39,8 +39,8 @@
 							rendered="#{!identity.loggedIn}" /></li>
 					<li><h:link outcome="/userLogin" value="Log Out"
 							rendered="#{identity.loggedIn}" /></li>
-					<li><h:link outcome="/admin/allRecipesList" value="all recipes"
-							rendered="#{loggedUserController.admin}" /></li>
+					<li><h:link outcome="/admin/allRecipesList"
+							value="all recipes" rendered="#{loggedUserController.admin}" /></li>
 					<li><h:link outcome="/admin/userList" value="all users"
 							rendered="#{loggedUserController.admin}" /></li>
 				</ul>
@@ -71,9 +71,24 @@
 		<br style="clear: both" />
 	</div>
 
-	<footer>
+	<footer> <!-- 
 	<div id="footer-wrapper">
-		<p>The page footer... maybe place our contacts here</p>
+		<div id="footer" class="container">
+			<div id="fbox1">
+				<header>About the project</header>
+				<p>
+				
+				</p>
+			</div>
+		</div>
+	</div>
+	 -->
+	<div id="copyright" class="container">
+		<p>
+			Copyright (c) 2013 <a href="mailto:tomas.plevko@seznam.cz">tom</a>, <a
+				href="mailto:filip.kiss@gmail.com">filip</a>. All rights reserved.
+			Design by <a href="http://www.freecsstemplates.org/" rel="nofollow">FreeCSSTemplates.org</a>.
+		</p>
 	</div>
 	</footer>
 

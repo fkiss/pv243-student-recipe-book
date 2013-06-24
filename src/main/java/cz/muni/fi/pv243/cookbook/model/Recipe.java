@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -39,6 +40,7 @@ public class Recipe implements Serializable {
 	private String description;
 
 	@NotNull
+	@Size(max = 300)
 	private String oneSentenceDescription;
 
 	@NotNull
@@ -52,6 +54,7 @@ public class Recipe implements Serializable {
 	private Integer portions;
 
 	@Min(0)
+	@Max(5)
 	private Integer stars;
 
 	@Min(0)
@@ -79,6 +82,7 @@ public class Recipe implements Serializable {
 		this.portions = portions;
 		this.stars = stars;
 		this.time = time;
+		this.price = price;
 		this.oneSentenceDescription = oneSentenceDescription;
 	}
 

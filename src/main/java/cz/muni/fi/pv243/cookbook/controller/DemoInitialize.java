@@ -47,25 +47,53 @@ public class DemoInitialize {
 				"admin@admin.admin", "admin", true));
 
 		User tomas = userDao.findUserByNick("admin");
+		User filip = userDao.findUserByNick("filip");
 		User roman = userDao.findUserByNick("roman");
 
 		recipeDao
 				.createRecipe(new Recipe(
 						"halusky",
-						"Syrové brambory nastrouháme najemno a vymačkáme z nich vodu. Vodu necháme ustát " + 
-						"a usazený škrob dáme do brambor, přidáme smíchané mouky a vypracujeme tužší těsto. " +
-								"Těsto protlačíme halušníkem do vroucí osolené vody. Halušky promícháme, aby " +
-						"se nepřilepily ke dnu hrnce, jakmile halušky vyplavou na povrch, jsou hotové. Halušky " +
-								"podáváme s kyselým zelím, brynzou, tvarohem, slaninou nebo škvarky.",
-						tomas, FoodCategory.OTHER, 4, 0, 213, 100,
+						"Syrové brambory nastrouháme najemno a vymačkáme z nich vodu. Vodu necháme ustát "
+								+ "a usazený škrob dáme do brambor, přidáme smíchané mouky a vypracujeme tužší těsto. "
+								+ "Těsto protlačíme halušníkem do vroucí osolené vody. Halušky promícháme, aby "
+								+ "se nepřilepily ke dnu hrnce, jakmile halušky vyplavou na povrch, jsou hotové. Halušky "
+								+ "podáváme s kyselým zelím, brynzou, tvarohem, slaninou nebo škvarky.",
+						tomas, FoodCategory.OTHER, 4, 0, 45, 150,
 						"Klasické slovenské halušky"));
-		recipeDao.createRecipe(new Recipe("kebap",
-				"zoberieme maso, hranolky a tak dalej... ", tomas,
-				FoodCategory.FLESH, 3, 0, 121, 50, "pravy turecky kebap"));
+
+		recipeDao
+				.createRecipe(new Recipe(
+						"cesnekova polievka",
+						"Menší cibuli a česnek očistíme. Cibuli nasekáme najemno, česnek také, nebo jej nakrájíme na "
+								+ "plátky či prolisujeme. Záleží, jak má kdo rád. Brambory oloupeme a nakrájíme na kostičky. V hrnci "
+								+ "rozehřejeme sádlo a zesklovatíme cibuli. Přidáme česnek, krátce orestujeme a zalijeme "
+								+ "horkou vodou. Přidáme brambory, kostku bujónu (masový nebo zeleninový) a polévku osolíme, opepříme a "
+								+ "přidáme drcený kmín. Česnečku vaříme do změknutí brambor. Ke konci přidáme do česnečky "
+								+ "drhnutou majoránku. Pro silnější česnekový efekt můžeme přidat další 3 stroužky česneku, tentokrát už "
+								+ "prolisovaného. Horkou česnečku lijeme nejlépe do misek a posypeme upečenými kostičkami "
+								+ "tvrdšího chleba a nastrouhaným sýrem. Hotovou česnečku se sýrem ihned podáváme.",
+						filip, FoodCategory.SOUP, 4, 0, 110, 50,
+						"Řádná česnečka, která postaví na nohy i mrtvolu"));
+		
+		recipeDao
+				.createRecipe(new Recipe(
+						"Gulas s bramborami",
+						"Nakrájíme cibuli, oloupeme salám a nakrájíme na kolečka/půlkolečka/kostičky, brambory " + 
+						"nakrájíme na menší kostky. Cibuli zpěníme na rozpáleném oleji spolu s česnekem, přihodíme " +
+								"salám a chvilku opékáme. Poté přidáme červenou papriku, promícháme a zalijeme horkou "+ 
+						"vodou (množství vody podle toho kolik chcete mít guláše). Přihodíme brambory, nasypeme " +
+								"trochu drceného kmínu a vaříme do změknutí brambor. V hrnku/skleničce si"+
+						" rozmícháme trochu hladké mouky s vodou (konzistence musí být kašovitá ale pořád tekutá)"+
+								" a nalijeme do guláše aby se zahustil. Pak už jen nasypeme majoránku a guláš je" +
+						" hotov.",
+						filip, FoodCategory.SOUP, 4, 0, 100, 50,
+						"klasický buřtguláš"));
+		
 		recipeDao.createRecipe(new Recipe("polievka",
 				"zmiesame vodu, a pridame dalsie veci...", roman,
 				FoodCategory.SOUP, 4, 0, 12, 50,
 				"velmi jednoducha polievka, ktora zarucene chuti vyborne"));
+		
 		recipeDao
 				.createRecipe(new Recipe("kolac",
 						"spravime cesto a dame piect do rury...", roman,
@@ -89,12 +117,13 @@ public class DemoInitialize {
 						"kolac, ktroy si velmi rychlo sami pripravite aj v prostredi koleje"));
 
 		Recipe halusky = recipeDao.findRecipeByName("halusky");
-		Recipe kebap = recipeDao.findRecipeByName("kebap");
 		Recipe polievka = recipeDao.findRecipeByName("polievka");
 		Recipe kolac = recipeDao.findRecipeByName("kolac");
 		Recipe kolac2 = recipeDao.findRecipeByName("kolac2");
 		Recipe kolac3 = recipeDao.findRecipeByName("kolac3");
 		Recipe kolac4 = recipeDao.findRecipeByName("kolac4");
+		Recipe cesnecka = recipeDao.findRecipeByName("cesnekova polievka");
+		Recipe burtgulas = recipeDao.findRecipeByName("Gulas s bramborami");
 
 		List<Ingredient> haluskyList = new ArrayList<Ingredient>();
 
@@ -106,17 +135,10 @@ public class DemoInitialize {
 		haluskyList.add(new Ingredient("mlieko", "kravske", "2 dl", true));
 		haluskyList.add(new Ingredient("slanina", "bravcova", "20 dg", false));
 
-		kebap.getIngredientList()
-				.add(new Ingredient("voda", "", "20 dl", true));
-		kebap.getIngredientList().add(
-				new Ingredient("zemiaky", "take gulate najlepsie", "4", true));
-		kebap.getIngredientList().add(
-				new Ingredient("bryndza", "kvalitna", "40 dg", true));
-
 		polievka.getIngredientList().add(
-				new Ingredient("pivo", "", "0.5 l", false));
+				new Ingredient("pivo", "", "0.5 l", true));
 		polievka.getIngredientList().add(
-				new Ingredient("korenie", "", "20 dl", false));
+				new Ingredient("korenie", "", "20 dl", true));
 		polievka.getIngredientList().add(
 				new Ingredient("cukor", "", "20 dg", false));
 		polievka.getIngredientList().add(
@@ -150,11 +172,50 @@ public class DemoInitialize {
 		kolac4.getIngredientList().add(
 				new Ingredient("muka", "stredne velky", "1", true));
 
+		cesnecka.getIngredientList().add(
+				new Ingredient("zemiaky", "gulate", "4 ks", true));
+		cesnecka.getIngredientList().add(
+				new Ingredient("cibula", "stredne velka", "1", true));
+		cesnecka.getIngredientList().add(
+				new Ingredient("cesnek", "velky", "2 palicky", true));
+		cesnecka.getIngredientList().add(
+				new Ingredient("bujon", "hovezi", "1 kocka", true));
+		cesnecka.getIngredientList().add(
+				new Ingredient("chlebove krutony", "na ozdobu", "hrst", false));
+		cesnecka.getIngredientList().add(
+				new Ingredient("syr", "na ozdobu", "15 dg", false));
+
+		burtgulas.getIngredientList().add(
+				new Ingredient("toceny salam", "", "250g", true));
+		burtgulas.getIngredientList().add(
+				new Ingredient("zemiaky", "väčšie", "4", true));
+		burtgulas.getIngredientList().add(
+				new Ingredient("cibula", "stredne velka", "1 Ks", true));
+		burtgulas.getIngredientList().add(
+				new Ingredient("mletá paprika", "sladka", "2 lyžice", true));
+		burtgulas.getIngredientList().add(
+				new Ingredient("majoranka", "", "", false));
+		burtgulas.getIngredientList().add(
+				new Ingredient("pepř", "", "", true));
+		burtgulas.getIngredientList().add(
+				new Ingredient("soľ", "", "", true));
+		burtgulas.getIngredientList().add(
+				new Ingredient("kmín", "", "", false));
+		burtgulas.getIngredientList().add(
+				new Ingredient("cesnak", "", "4 strúčiky", true));
+		burtgulas.getIngredientList().add(
+				new Ingredient("hladná múka", "", "", true));
+		
+
 		for (Ingredient ing : halusky.getIngredientList()) {
 			ingredientDao.createIngredient(ing);
 		}
 
-		for (Ingredient ing : kebap.getIngredientList()) {
+		for (Ingredient ing : burtgulas.getIngredientList()) {
+			ingredientDao.createIngredient(ing);
+		}
+
+		for (Ingredient ing : cesnecka.getIngredientList()) {
 			ingredientDao.createIngredient(ing);
 		}
 
