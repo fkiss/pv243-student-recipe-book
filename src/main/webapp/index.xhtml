@@ -59,18 +59,19 @@
 
 		<h3>Recipe search bar</h3>
 
-		<h:form>
+		<h:form id="find_form">
 			<h:inputText id="search" value="#{attributes}"
 				style=" width : 580px;" required="true"></h:inputText>
-			<h:commandButton value="Find!" action="#{recipeFinder.searchEverywhere(attributes)}">
+                    <h:commandButton value="Find!" action="#{recipeFinder.searchEverywhere(attributes)}" id="find_button">
+                        <f:ajax execute="find_form" render="search_results" />
 			</h:commandButton>
 
 			<br />
 			<br />
 
 			<h:messages />
-                                                            
-                                                            <h:outputText value="No recipes found :/" rendered="#{empty recipeFinder.foundRecipes}" />
+                        <h:panelGrid columns="1" id="search_results">
+                                                            <h:outputText value="No recipes found :/" rendered="#{empty recipeFinder.foundRecipes}" class="output"/>
                                                                                 <h:dataTable value="#{recipeFinder.foundRecipes}" var="_recipe" rendered="#{not empty recipeFinder.foundRecipes}">
 
 				<h:column>
@@ -97,7 +98,27 @@
                 #{_recipe.foodCategory.label}
             </h:column>
 			</h:dataTable>
+                                                            <h:dataTable value="#{recipeFinder.foundUsers}" var="_user" rendered="#{not empty recipeFinder.foundUsers}">
+	
+				<h:column>
+					<f:facet name="header">nick</f:facet>
+                #{_user.nick}
+            </h:column>
+				<h:column>
+					<f:facet name="header">First name</f:facet>
+                #{_user.firstName}
+            </h:column>
+				<h:column>
+					<f:facet name="header">Surname</f:facet>
+                #{_user.surname}
+            </h:column>
+				<h:column>
+					<f:facet name="header">e-mail</f:facet>
+                #{_user.email}
+            </h:column>
 
+			</h:dataTable>
+</h:panelGrid>
 		</h:form>
 
 

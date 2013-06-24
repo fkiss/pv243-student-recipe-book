@@ -11,7 +11,6 @@ import javax.inject.Named;
 
 import cz.muni.fi.pv243.cookbook.DAO.RecipeDao;
 import cz.muni.fi.pv243.cookbook.DAO.UserDao;
-import cz.muni.fi.pv243.cookbook.categories.FoodCategory;
 import cz.muni.fi.pv243.cookbook.model.Ingredient;
 import cz.muni.fi.pv243.cookbook.model.Recipe;
 import cz.muni.fi.pv243.cookbook.model.User;
@@ -34,7 +33,10 @@ public class RecipeFinder {
     
     @Inject
     UserDao userDao;
+    
     private List<Recipe> foundRecipes = new ArrayList<Recipe>();
+    
+    private List<User> foundUsers = new ArrayList<User>();
 
     public List<Recipe> getFoundRecipes() {
         return foundRecipes;
@@ -44,20 +46,25 @@ public class RecipeFinder {
         this.foundRecipes = foundRecipes;
     }
 
+    public List<User> getFoundUsers() {
+        return foundUsers;
+    }
+
+    public void setFoundUsers(List<User> foundUsers) {
+        this.foundUsers = foundUsers;
+    }
+
     public RecipeFinder() {
-        Recipe recipe = new Recipe();
-        
-        this.foundRecipes.add(recipe);
     }
 
     public List<Recipe> searchEverywhere(String attributes) {
 
         foundRecipes.clear();
-        List<User> userList = new ArrayList<User>();
+        foundUsers.clear();
 
         foundRecipes.addAll(findRecipeByName(attributes));
         foundRecipes.addAll(findRecipeByIngredients(attributes));
-        //userList = getAllUsersController.getAllUsers(); 
+        foundUsers.addAll(findUserByNameOrNick(attributes)); 
         //vyriesit user recognization vJSF
 
         if (foundRecipes.isEmpty()) {
@@ -87,26 +94,27 @@ public class RecipeFinder {
         return recipeList;
     }
 
-//                    private List<User> findUserByNameOrNick(String inputUserName) {
-//
-//		List<User> userList = new ArrayList<User>();
-//                                        List<User> allUsers = new ArrayList<User>(); //TODO: getAllUsers 
-//		
-//                                        if (inputUserName == null || inputUserName.trim().equals("")) {
-//
-//			throw new IllegalArgumentException("Argument is null");
-//		}
-//                                        userList.add(userDao.findUserByNick(inputUserName));
-//
-//		for (User user : allUsers) {  
-//
-//                                            if (user.getFirstName().contains(inputUserName) || user.getSurname().contains(inputUserName) || (user.getFirstName() + user.getSurname()).contains(inputUserName) || (user.getSurname()+ user.getFirstName()).contains(inputUserName)) {
-//                                                userList.add(user);
-//                                            }
-//		}
-//
-//		return userList;
-//	}
+                    private List<User> findUserByNameOrNick(String inputUserName) {
+
+		List<User> userList = new ArrayList<User>();
+                                        List<User> allUsers = userDao.retreiveAllUsers();
+		
+                                        if (inputUserName == null || inputUserName.trim().equals("")) {
+
+			throw new IllegalArgumentException("Argument is null");
+		}
+                                        userList.add(userDao.findUserByNick(inputUserName));
+
+		for (User user : allUsers) {  
+
+                                            if (user.getFirstName().contains(inputUserName) || user.getSurname().contains(inputUserName) || (user.getFirstName() + user.getSurname()).contains(inputUserName) || (user.getSurname()+ user.getFirstName()).contains(inputUserName)) {
+                                                userList.add(user);
+                                            }
+		}
+
+		return userList;
+	}
+    
     private Ingredient findIngredientByName(String inputIngredientName) {
 
         Ingredient wantedIngredient = new Ingredient();
