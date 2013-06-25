@@ -57,21 +57,22 @@ public class RecipeFinder {
     public RecipeFinder() {
     }
 
-    public List<Recipe> searchEverywhere(String attributes) {
+    public void searchEverywhere(String attributes) {
 
         foundRecipes.clear();
         foundUsers.clear();
 
         foundRecipes.addAll(findRecipeByName(attributes));
         foundRecipes.addAll(findRecipeByIngredients(attributes));
+        
         foundUsers.addAll(findUserByNameOrNick(attributes)); 
+        
         //vyriesit user recognization vJSF
-
+        
         if (foundRecipes.isEmpty()) {
             //throw new IllegalArgumentException("No recipes found!");
         }
 
-        return foundRecipes;
     }
 
     private List<Recipe> findRecipeByName(String inputRecipeName) {
@@ -107,7 +108,8 @@ public class RecipeFinder {
 
 		for (User user : allUsers) {  
 
-                                            if (user.getFirstName().contains(inputUserName) || user.getSurname().contains(inputUserName) || (user.getFirstName() + user.getSurname()).contains(inputUserName) || (user.getSurname()+ user.getFirstName()).contains(inputUserName)) {
+                                            if ((user.getFirstName().contains(inputUserName) || user.getSurname().contains(inputUserName) || (user.getFirstName() + user.getSurname()).contains(inputUserName) 
+                                                    || (user.getSurname()+ user.getFirstName()).contains(inputUserName)) && !userList.contains(user)) {
                                                 userList.add(user);
                                             }
 		}

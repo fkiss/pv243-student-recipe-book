@@ -95,33 +95,33 @@ public class DemoInitialize {
 				"velmi jednoducha polievka, ktora zarucene chuti vyborne"));
 		
 		recipeDao
-				.createRecipe(new Recipe("kolac",
+				.createRecipe(new Recipe("kolac jablkovy",
 						"spravime cesto a dame piect do rury...", roman,
 						FoodCategory.DESSERT, 4, 0, 12, 100,
 						"kolac, ktroy si velmi rychlo sami pripravite aj v prostredi koleje"));
 
 		recipeDao
-				.createRecipe(new Recipe("kolac2",
+				.createRecipe(new Recipe("kolac jahodovy",
 						"spravime cesto a dame piect do rury...", roman,
 						FoodCategory.DESSERT, 4, 0, 12, 100,
 						"kolac, ktroy si velmi rychlo sami pripravite aj v prostredi koleje"));
 		recipeDao
-				.createRecipe(new Recipe("kolac3",
+				.createRecipe(new Recipe("kolac jablkovo-jahodovy",
 						"spravime cesto a dame piect do rury...", roman,
 						FoodCategory.DESSERT, 4, 0, 12, 100,
 						"kolac, ktroy si velmi rychlo sami pripravite aj v prostredi koleje"));
 		recipeDao
-				.createRecipe(new Recipe("kolac4",
+				.createRecipe(new Recipe("kolac makovy",
 						"spravime cesto a dame piect do rury...", roman,
 						FoodCategory.DESSERT, 4, 0, 12, 100,
 						"kolac, ktroy si velmi rychlo sami pripravite aj v prostredi koleje"));
 
 		Recipe halusky = recipeDao.findRecipeByName("halusky");
 		Recipe polievka = recipeDao.findRecipeByName("polievka");
-		Recipe kolac = recipeDao.findRecipeByName("kolac");
-		Recipe kolac2 = recipeDao.findRecipeByName("kolac2");
-		Recipe kolac3 = recipeDao.findRecipeByName("kolac3");
-		Recipe kolac4 = recipeDao.findRecipeByName("kolac4");
+		Recipe kolacJb = recipeDao.findRecipeByName("kolac jablkovy");
+		Recipe kolacJh = recipeDao.findRecipeByName("kolac jahodovy");
+		Recipe kolacJJ = recipeDao.findRecipeByName("kolac jablkovo-jahodovy");
+		Recipe kolacM = recipeDao.findRecipeByName("kolac makovy");
 		Recipe cesnecka = recipeDao.findRecipeByName("cesnekova polievka");
 		Recipe burtgulas = recipeDao.findRecipeByName("Gulas s bramborami");
 
@@ -144,33 +144,39 @@ public class DemoInitialize {
 		polievka.getIngredientList().add(
 				new Ingredient("voda", "", "20 dl", true));
 
-		kolac.getIngredientList().add(
-				new Ingredient("sol", "najlepsie alpska", "20 dg", true));
-		kolac.getIngredientList().add(
-				new Ingredient("muka", "stredne velky", "1", true));
-		kolac.getIngredientList().add(
-				new Ingredient("cibula", "stredne velka", "5", false));
-
-		kolac2.getIngredientList().add(
-				new Ingredient("sol", "najlepsie alpska", "20 dg", true));
-		kolac2.getIngredientList().add(
-				new Ingredient("muka", "stredne velky", "1", true));
-		kolac2.getIngredientList().add(
-				new Ingredient("cibula", "stredne velka", "5", false));
-		kolac2.getIngredientList().add(
+		kolacJb.getIngredientList().add(
+				new Ingredient("mlieko", "najlepsie alpska", "20 dg", true));
+		kolacJb.getIngredientList().add(
+				new Ingredient("muka", "stredne velka", "1", true));
+		kolacJb.getIngredientList().add(
+				new Ingredient("cukor", "stredne velka", "5", false));
+                                        kolacJb.getIngredientList().add(
 				new Ingredient("jablko", "stredne velka", "5", false));
-		kolac2.getIngredientList().add(
-				new Ingredient("cesnak", "stredne velka", "5", false));
-		kolac2.getIngredientList().add(
-				new Ingredient("kofola", "stredne velka", "5", false));
 
-		kolac3.getIngredientList().add(
-				new Ingredient("sol", "najlepsie alpska", "20 dg", true));
+		kolacJh.getIngredientList().add(
+				new Ingredient("mlieko", "najlepsie alpska", "2l", true));
+		kolacJh.getIngredientList().add(
+				new Ingredient("muka", "stredne velka", "1", true));
+		kolacJh.getIngredientList().add(
+				new Ingredient("cukor", "stredne velka", "5", false));
+                                        kolacJh.getIngredientList().add(
+				new Ingredient("jahody", "stredne velka", "5", false));
 
-		kolac4.getIngredientList().add(
-				new Ingredient("sol", "najlepsie alpska", "20 dg", true));
-		kolac4.getIngredientList().add(
-				new Ingredient("muka", "stredne velky", "1", true));
+		kolacJJ.getIngredientList().add(
+				new Ingredient("mlieko", "najlepsie alpska", "2l", true));
+		kolacJJ.getIngredientList().add(
+				new Ingredient("muka", "stredne velke", "1", true));
+		kolacJJ.getIngredientList().add(
+				new Ingredient("jablko", "stredne velke", "5", false));
+                                        kolacJJ.getIngredientList().add(
+				new Ingredient("jahody", "stredne velke", "5", false));
+
+		kolacM.getIngredientList().add(
+				new Ingredient("mlieko", "najlepsie alpske", "2l", true));
+		kolacM.getIngredientList().add(
+				new Ingredient("muka", "stredne velka", "1", true));
+                                        kolacM.getIngredientList().add(
+				new Ingredient("cukor", "krystalovy", "1", true));
 
 		cesnecka.getIngredientList().add(
 				new Ingredient("zemiaky", "gulate", "4 ks", true));
@@ -219,7 +225,7 @@ public class DemoInitialize {
 			ingredientDao.createIngredient(ing);
 		}
 
-		for (Ingredient ing : kolac.getIngredientList()) {
+		for (Ingredient ing : kolacJb.getIngredientList()) {
 			ingredientDao.createIngredient(ing);
 		}
 
@@ -227,15 +233,15 @@ public class DemoInitialize {
 			ingredientDao.createIngredient(ing);
 		}
 
-		for (Ingredient ing : kolac2.getIngredientList()) {
+		for (Ingredient ing : kolacJh.getIngredientList()) {
 			ingredientDao.createIngredient(ing);
 		}
 
-		for (Ingredient ing : kolac3.getIngredientList()) {
+		for (Ingredient ing : kolacJJ.getIngredientList()) {
 			ingredientDao.createIngredient(ing);
 		}
 
-		for (Ingredient ing : kolac4.getIngredientList()) {
+		for (Ingredient ing : kolacM.getIngredientList()) {
 			ingredientDao.createIngredient(ing);
 		}
 	}
